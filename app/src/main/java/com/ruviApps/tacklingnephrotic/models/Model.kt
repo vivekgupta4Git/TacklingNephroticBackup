@@ -4,6 +4,28 @@ import androidx.room.*
 import androidx.room.ForeignKey.Companion.CASCADE
 import java.util.*
 
+
+@Entity
+data class CareTaker(
+    @PrimaryKey(true)
+    @ColumnInfo("caretaker_id")
+    val ctId : Long,
+    @Embedded val fullName: FullName,
+    @Embedded val contact : ContactInfo,
+
+    )
+
+data class ContactInfo(
+    @ColumnInfo("primary_contact")
+    val primaryContact: Int,
+    @ColumnInfo("secondary_contact")
+    val secondaryContact : Int?,
+    @ColumnInfo("email")
+    val email: String?
+
+)
+
+
 @Entity
 data class Doctor(
     @PrimaryKey(true)
@@ -43,6 +65,14 @@ data class MedicineUnit(
     val unitName : String
 )
 
+@Entity
+data class Frequency(
+    @PrimaryKey(true)
+    @ColumnInfo("frequency_code")
+    val frequencyCode: Long,
+    val name: String
+)
+
 @Entity(foreignKeys = [ForeignKey(
     entity = Patient::class,
     parentColumns = ["patient_id"],
@@ -61,3 +91,17 @@ data class Relapse(
     val endDate : Date
 
 )
+data class PatientWithRelapses(
+    @Embedded val patient: Patient,
+    @Relation(
+        parentColumn = "patient_id",
+        entityColumn = "to_patient"
+    )
+    val relapses : List<Relapse>
+)
+
+/**
+ * @Transaction
+ * @Query("Select * from Patient)
+ * fun getPatientWithRelapses() : List<PatientWithRelapses>
+ */
