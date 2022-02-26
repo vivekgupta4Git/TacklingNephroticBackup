@@ -1,8 +1,16 @@
 package com.ruviApps.tacklingnephrotic.converters
 
 import androidx.room.TypeConverter
-import com.ruviApps.tacklingnephrotic.models.ResultCode
+import com.ruviApps.tacklingnephrotic.database.entities.DiseasesState
+import com.ruviApps.tacklingnephrotic.database.entities.HealthStatus
+import com.ruviApps.tacklingnephrotic.database.entities.NephroticState
+import com.ruviApps.tacklingnephrotic.database.entities.ResultCode
 import java.util.*
+
+/**
+ *  Room 2.3.0 added automatic conversion of an enum class value to and from its String representation.
+ *  So, now you can use an enum without a @TypeConverter pair
+ */
 
 class ResultConverter{
 
@@ -37,5 +45,52 @@ class DateConverter {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
+    }
+}
+
+class DiseaseStateConverter{
+    /**
+     * convert Disease State to String value
+     */
+    @TypeConverter
+    fun fromDiseaseState(value : DiseasesState) = value.name
+
+    /**
+     * Convert a String to Disease State
+     */
+    @TypeConverter
+    fun toDiseaseState(value : String): DiseasesState {
+        return (DiseasesState.valueOf(value))
+    }
+
+}
+class HeathStatusConverter{
+    /**
+     * convert health Status to String value
+     */
+    @TypeConverter
+    fun fromHealthStatus(value : HealthStatus) = value.name
+
+    /**
+     * Convert a String to Health Status
+     */
+    @TypeConverter
+    fun toHealthStatus(value : String): HealthStatus {
+        return (HealthStatus.valueOf(value))
+    }
+}
+class NephroticStateConverter{
+    /**
+     * convert nephrotic state to String value
+     */
+    @TypeConverter
+    fun fromNephroticState(value : NephroticState) = value.name
+
+    /**
+     * Convert a String to Nephrotic State
+     */
+    @TypeConverter
+    fun toNephroticState(value : String): NephroticState {
+        return (NephroticState.valueOf(value))
     }
 }

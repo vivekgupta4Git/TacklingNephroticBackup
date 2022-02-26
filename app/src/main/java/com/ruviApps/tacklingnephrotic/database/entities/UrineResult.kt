@@ -1,33 +1,38 @@
-package com.ruviApps.tacklingnephrotic.models
+package com.ruviApps.tacklingnephrotic.database.entities
 
 import androidx.room.*
 import androidx.room.ForeignKey.Companion.CASCADE
 import java.util.*
 
-@Entity(foreignKeys = [
-    ForeignKey(entity = Patient::class,
-    parentColumns = ["patient_id"],
-    childColumns = ["urine_result_patient_id"],
+@Entity(tableName = TableName.UrineResultTable, foreignKeys = [
+    ForeignKey(entity = DatabasePatient::class,
+    parentColumns = [DatabasePatient.ColumnPatientId],
+    childColumns = [UrineResult.ColumnPatientId],
     onDelete = CASCADE)])
 data class UrineResult(
     @PrimaryKey(true)
-    @ColumnInfo("result_id")
+    @ColumnInfo(ColumnResultId)
     val resultId : Long,
     @ColumnInfo("result_code")
     val resultCode : ResultCode,
     val remarks : String?,
     @ColumnInfo("recorded_date", defaultValue = "'CURRENT_TIMESTAMP'")
     val recordedDate : Date,
-    @ColumnInfo("urine_result_patient_id")
+    @ColumnInfo(ColumnPatientId)
     val urineResultOfPatientId : Long
 
-)
+){
+    companion object{
+        const val ColumnResultId = "result_id"
+        const val ColumnPatientId = "urine_result_patient_id"
+    }
+}
 
 data class PatientWithUrineResults(
-    @Embedded val patient: Patient,
+    @Embedded val patient: DatabasePatient,
     @Relation(
-        parentColumn = "patient_id",
-        entityColumn = "urine_result_patient_id"
+        parentColumn = DatabasePatient.ColumnPatientId,
+        entityColumn = UrineResult.ColumnPatientId
     )
     val urineResults : List<UrineResult>
 )
