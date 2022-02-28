@@ -2,6 +2,7 @@ package com.ruviApps.tacklingnephrotic.database.entities
 
 import androidx.room.*
 import androidx.room.ForeignKey.Companion.CASCADE
+import com.ruviApps.tacklingnephrotic.domain.CareTaker
 import java.util.*
 
 
@@ -18,6 +19,7 @@ data class DatabaseCareTaker(
         const val ColumnCareTakerId = "caretaker_id"
     }
 }
+
 
 data class ContactInfo(
     @ColumnInfo("primary_contact")

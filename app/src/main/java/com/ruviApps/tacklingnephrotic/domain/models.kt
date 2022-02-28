@@ -1,5 +1,8 @@
 package com.ruviApps.tacklingnephrotic.domain
 
+import com.ruviApps.tacklingnephrotic.database.entities.ContactInfo
+import com.ruviApps.tacklingnephrotic.database.entities.DatabaseCareTaker
+import com.ruviApps.tacklingnephrotic.database.entities.FullName
 import java.util.*
 
 data class Patient(
@@ -16,10 +19,12 @@ data class CareTaker(
     val primaryContact:Int?,
     val secondaryContact:Int?
 )
+
+
+
 data class Result(
     val resultId : Long,
     val resultCode : String,
     val remarks : String?,
     val recordedDate : Date
 )
-
