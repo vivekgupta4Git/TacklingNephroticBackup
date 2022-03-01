@@ -3,7 +3,9 @@ package com.ruviApps.tacklingnephrotic.database.entities
 import androidx.room.*
 import androidx.room.ForeignKey.Companion.CASCADE
 
-@Entity(tableName = TableName.PatientTable, foreignKeys = [ForeignKey(entity = DatabaseCareTaker::class,
+@Entity(tableName = TableName.PatientTable,
+  //  indices = [Index(value = [DatabasePatient.ColumnPatientCareTakerId], unique = true)],
+    foreignKeys = [ForeignKey(entity = DatabaseCareTaker::class,
     parentColumns =   [DatabaseCareTaker.ColumnCareTakerId],
     childColumns = [DatabasePatient.ColumnPatientCareTakerId],
     onDelete = CASCADE)
@@ -17,7 +19,7 @@ data class DatabasePatient(
     val weight: Float?,
     @ColumnInfo("snap_uri")
     val snapUri : String = "",
-    @ColumnInfo(ColumnPatientCareTakerId)
+    @ColumnInfo(ColumnPatientCareTakerId,index=true)
     val patientCaretakerId : Long
 ){
     companion object DatabasePatientColumns{

@@ -2,8 +2,10 @@ package com.ruviApps.tacklingnephrotic.extension
 
 import com.ruviApps.tacklingnephrotic.database.entities.ContactInfo
 import com.ruviApps.tacklingnephrotic.database.entities.DatabaseCareTaker
+import com.ruviApps.tacklingnephrotic.database.entities.DatabasePatient
 import com.ruviApps.tacklingnephrotic.database.entities.FullName
 import com.ruviApps.tacklingnephrotic.domain.CareTaker
+import com.ruviApps.tacklingnephrotic.domain.Patient
 
 //extension function on List of DatabaseCareTaker(Database Object) to convert it into List of CareTaker(Domain Object)
 fun List<DatabaseCareTaker>.toDomainCareTaker() : List<CareTaker>{
@@ -52,4 +54,36 @@ fun CareTaker.toDatabaseCareTaker() : DatabaseCareTaker{
     val contact = ContactInfo(primaryContact,secondaryContact,email)
 
     return DatabaseCareTaker(careTakerId,fullName,contact)
+}
+
+
+//extension function to convert patient domain object to database object
+fun Patient.toDatabasePatient() : DatabasePatient{
+    val firstName= patientName.substringBefore(" ")
+    val lastName = patientName.substringAfterLast(" ")
+    val fullName =  FullName(firstName,lastName)          //if first name is null, We throw NPE
+
+    return DatabasePatient(patientId,
+        fullName,
+        patientAge,
+    patientWeight,
+    patientPicUri,underCareTakerId)
+
+}
+
+//extension function to convert list of patient domain objects to database object list
+fun List<Patient>.toDatabasePatient() : List<DatabasePatient>{
+
+    return map {
+        val firstName= it.patientName.substringBefore(" ")
+        val lastName = it.patientName.substringAfterLast(" ")
+        val fullName =  FullName(firstName,lastName)          //if first name is null, We throw NPE
+
+        DatabasePatient(it.patientId,
+            fullName,
+            it.patientAge,
+            it.patientWeight,
+            it.patientPicUri,
+            it.underCareTakerId)
+    }
 }

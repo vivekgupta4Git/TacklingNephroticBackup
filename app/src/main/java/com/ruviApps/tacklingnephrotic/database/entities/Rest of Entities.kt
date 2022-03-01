@@ -23,9 +23,9 @@ data class DatabaseCareTaker(
 
 data class ContactInfo(
     @ColumnInfo("primary_contact")
-    val primaryContact: Int,
+    val primaryContact: Long,
     @ColumnInfo("secondary_contact")
-    val secondaryContact : Int?,
+    val secondaryContact : Long?,
     @ColumnInfo("email")
     val email: String?
 
