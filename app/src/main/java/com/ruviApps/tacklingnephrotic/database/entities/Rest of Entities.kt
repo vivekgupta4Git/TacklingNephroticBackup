@@ -8,7 +8,7 @@ import java.util.*
 
 @Entity(tableName = TableName.CaretakerTable)
 data class DatabaseCareTaker(
-    @PrimaryKey(true)
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(ColumnCareTakerId)
     val ctId : Long,
     @Embedded val fullName: FullName,
