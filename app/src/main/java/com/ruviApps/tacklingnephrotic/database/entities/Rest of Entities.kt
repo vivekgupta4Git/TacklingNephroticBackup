@@ -2,7 +2,6 @@ package com.ruviApps.tacklingnephrotic.database.entities
 
 import androidx.room.*
 import androidx.room.ForeignKey.Companion.CASCADE
-import com.ruviApps.tacklingnephrotic.domain.CareTaker
 import java.util.*
 
 
@@ -33,7 +32,7 @@ data class ContactInfo(
 
 
 @Entity(tableName = TableName.DoctorsTable)
-data class DatabaseDoctor(
+data class Doctor(
     @PrimaryKey(true)
     @ColumnInfo(ColumnDoctorId)
     val doctorId : Long,
@@ -48,7 +47,7 @@ data class DatabaseDoctor(
 }
 
 @Entity(tableName = TableName.MedicinesTable)
-data class DatabaseMedicine(
+data class Medicines(
     @PrimaryKey(true)
     @ColumnInfo(ColumnMedicineCode)
     val medicineCode : Long,
@@ -62,7 +61,7 @@ data class DatabaseMedicine(
 }
 
 @Entity(tableName = TableName.DiseasesTable)
-data class DatabaseDiseases(
+data class Diseases(
     @PrimaryKey(true)
     @ColumnInfo(ColumnDiseaseCode)
     val diseaseCode : Long,
@@ -218,8 +217,8 @@ data class MedicinesAdministered(
         childColumns = [MedicinesGivenDetails.ColumnAdministeredId],
         onDelete = CASCADE
     ),ForeignKey(
-    entity = DatabaseMedicine::class,
-    parentColumns = [DatabaseMedicine.ColumnMedicineCode],
+    entity = Medicines::class,
+    parentColumns = [Medicines.ColumnMedicineCode],
     childColumns = [MedicinesGivenDetails.ColumnMedicineId]
 ),ForeignKey(
     entity = MedicineUnit::class,

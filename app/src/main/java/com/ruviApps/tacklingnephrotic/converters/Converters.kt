@@ -15,17 +15,17 @@ import java.util.*
 class ResultConverter{
 
     /**
-     * convert Result code to an integer value
+     * convert Result code to String value
      */
     @TypeConverter
-    fun fromResultCode(value : ResultCode) = value.value
+    fun fromResultCode(value : ResultCode) = value.name
 
     /**
-     * Convert an Integer to Result Code
+     * Convert String to Result Code
      */
     @TypeConverter
-    fun toResultCode(value : Int): ResultCode {
-        return (ResultCode.values()[value])
+    fun toResultCode(value : String): ResultCode {
+        return (ResultCode.valueOf(value))
     }
 }
 

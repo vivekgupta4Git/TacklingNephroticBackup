@@ -16,15 +16,16 @@ data class UrineResult(
     @ColumnInfo("result_code")
     val resultCode : ResultCode,
     val remarks : String?,
-    @ColumnInfo("recorded_date", defaultValue = "'CURRENT_TIMESTAMP'")
+    @ColumnInfo(ColumnRecordedDate, defaultValue = "'CURRENT_TIMESTAMP'")
     val recordedDate : Date,
-    @ColumnInfo(ColumnPatientId)
+    @ColumnInfo(ColumnPatientId,index=true)
     val urineResultOfPatientId : Long
 
 ){
     companion object{
         const val ColumnResultId = "result_id"
         const val ColumnPatientId = "urine_result_patient_id"
+        const val ColumnRecordedDate = "recorded_date"
     }
 }
 

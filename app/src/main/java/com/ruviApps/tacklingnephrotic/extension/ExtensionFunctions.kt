@@ -87,3 +87,39 @@ fun List<Patient>.toDatabasePatient() : List<DatabasePatient>{
             it.underCareTakerId)
     }
 }
+
+//extension function to convert database patient object into domain patient object
+fun DatabasePatient.toDomainPatient() : Patient{
+
+    val firstName = fullName?.firstName
+    val lastName = fullName?.lastName
+    val patientName = "$firstName $lastName"
+
+    return Patient(
+        patientId,
+        patientName,
+        age,
+        weight,
+        snapUri,
+        patientCaretakerId
+    )
+
+}
+
+//extension function to convert List of Patient Database Objects to list of domain Patient Objects
+fun List<DatabasePatient>.toDomainPatient() : List<Patient>{
+    return map{
+        val firstName = it.fullName?.firstName
+        val lastName = it.fullName?.lastName
+        val patientName = "$firstName $lastName"
+
+        Patient(
+            it.patientId,
+            patientName,
+            it.age,
+            it.weight,
+            it.snapUri,
+            it.patientCaretakerId
+        )
+    }
+}

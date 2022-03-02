@@ -11,8 +11,8 @@ import java.util.*
     childColumns = [OtherDiseasesToPatient.ColumnToPatientId],
     onDelete = CASCADE
 ),ForeignKey(
-    entity = DatabaseDiseases::class,
-    parentColumns = [DatabaseDiseases.ColumnDiseaseCode],
+    entity = Diseases::class,
+    parentColumns = [Diseases.ColumnDiseaseCode],
     childColumns = [OtherDiseasesToPatient.ColumnDiseaseId],
     onDelete = CASCADE
 )],
@@ -67,9 +67,9 @@ fun getPatientWithOtherDiseaseDetails(patientId : Long): List<PatientWithOtherDi
  * For each disease there can be previous history record which are recorded in OtherDiseasesToPatient
  */
 data class DiseaseWithOtherDiseasesToPatient(
-    @Embedded val diseases: DatabaseDiseases,
+    @Embedded val diseases: Diseases,
     @Relation(
-        parentColumn = DatabaseDiseases.ColumnDiseaseCode,
+        parentColumn = Diseases.ColumnDiseaseCode,
         entityColumn = OtherDiseasesToPatient.ColumnDiseaseId
     )
     val diseasesToPatientDetails : List<OtherDiseasesToPatient>

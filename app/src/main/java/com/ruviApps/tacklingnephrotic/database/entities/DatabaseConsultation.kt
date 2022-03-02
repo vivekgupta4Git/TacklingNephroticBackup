@@ -11,8 +11,8 @@ import java.util.*
     childColumns = [DatabaseConsultation.ColumnPatientId],
     onDelete = CASCADE
 ),ForeignKey(
-    entity = DatabaseDoctor::class,
-    parentColumns = [DatabaseDoctor.ColumnDoctorId],
+    entity = Doctor::class,
+    parentColumns = [Doctor.ColumnDoctorId],
     childColumns = [DatabaseConsultation.ColumnDoctorId],
     onDelete = CASCADE
 )])
@@ -59,9 +59,9 @@ val consultations : List<DatabaseConsultation>
 
 // one to one relationship between Consultation and Doctor.
 data class DoctorWithConsultations(
-    @Embedded val doctor: DatabaseDoctor,
+    @Embedded val doctor: Doctor,
     @Relation(
-        parentColumn = DatabaseDoctor.ColumnDoctorId,
+        parentColumn = Doctor.ColumnDoctorId,
         entityColumn = DatabaseConsultation.ColumnDoctorId
     )
     val consultations: List<DatabaseConsultation>
@@ -80,8 +80,8 @@ data class DoctorWithConsultations(
     childColumns = [PrescriptionDetails.ColumnConsultId],
     onDelete = CASCADE
 ),ForeignKey(
-    entity = DatabaseDiseases::class,
-    parentColumns = [DatabaseDiseases.ColumnDiseaseCode],
+    entity = Diseases::class,
+    parentColumns = [Diseases.ColumnDiseaseCode],
     childColumns = [PrescriptionDetails.ColumnDiseaseId]
 )])
 data class PrescriptionDetails(
@@ -165,8 +165,8 @@ data class ConsultationWithPrescriptionDetails(
     ),
 
     ForeignKey(
-        entity = DatabaseMedicine::class,
-        parentColumns = [DatabaseMedicine.ColumnMedicineCode],
+        entity = Medicines::class,
+        parentColumns = [Medicines.ColumnMedicineCode],
         childColumns = [PrescribedMedicines.ColumnMedicineId],
         onDelete = CASCADE
     )
@@ -216,9 +216,9 @@ data class PrescriptionDetailsWithMedicineDetails(
  */
 
 data class MedicineWithMedicineDetails(
-    @Embedded val medicine: DatabaseMedicine,
+    @Embedded val medicine: Medicines,
     @Relation(
-        parentColumn = DatabaseMedicine.ColumnMedicineCode,
+        parentColumn = Medicines.ColumnMedicineCode,
         entityColumn = PrescribedMedicines.ColumnMedicineId
     )
     val medicineDetails : List<PrescribedMedicines>
