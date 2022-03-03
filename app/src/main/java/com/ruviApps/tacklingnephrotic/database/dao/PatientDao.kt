@@ -23,14 +23,14 @@ interface PatientDao {
     @Insert(onConflict =OnConflictStrategy.REPLACE)
     suspend fun insertAllPatient(vararg patient : DatabasePatient)
 
-    @Query("Select * from " + TableName.PatientTable)
+    @Query("Select * from  ${TableName.PatientTable}")
     suspend fun getAllPatient() : List<DatabasePatient>?
 
-    @Query("Select * from " + TableName.PatientTable + " where " + DatabasePatient.ColumnPatientId + " = :id")
+    @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")
     suspend fun getPatientById(id : Long) : DatabasePatient?
 
     @Transaction
-    @Query("Select * from " + TableName.PatientTable + " where " + DatabasePatient.ColumnPatientId + " =:id")
+    @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")
     suspend fun getPatientWithResults(id : Long) :  List<PatientWithUrineResults>
 
 }

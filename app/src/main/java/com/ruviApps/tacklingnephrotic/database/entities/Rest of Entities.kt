@@ -51,12 +51,13 @@ data class Medicines(
     @PrimaryKey(true)
     @ColumnInfo(ColumnMedicineCode)
     val medicineCode : Long,
-    @ColumnInfo("medicine_name")
+    @ColumnInfo(ColumnMedicineName)
     val medicineName : String,
 
 ){
     companion object{
         const val ColumnMedicineCode = "medicine_code"
+        const val ColumnMedicineName = "medicine_name"
     }
 }
 
@@ -65,11 +66,12 @@ data class Diseases(
     @PrimaryKey(true)
     @ColumnInfo(ColumnDiseaseCode)
     val diseaseCode : Long,
-    @ColumnInfo("disease_name")
+    @ColumnInfo(ColumnDiseaseName)
     val diseaseName : String,
 ){
     companion object{
         const val ColumnDiseaseCode = "diseases_code"
+        const val ColumnDiseaseName = "disease_name"
     }
 }
 
@@ -80,11 +82,12 @@ data class MedicineUnit(
     @PrimaryKey(true)
     @ColumnInfo(ColumnUnitId)
     val unitID : Long,
-    @ColumnInfo("unit_name")
+    @ColumnInfo(ColumnUnitName)
     val unitName : String
 ){
     companion object{
         const val ColumnUnitId = "unit_id"
+        const val ColumnUnitName = "unit_name"
     }
 }
 
@@ -93,10 +96,12 @@ data class Frequency(
     @PrimaryKey(true)
     @ColumnInfo(ColumnFrequencyCode)
     val frequencyCode: Long,
+    @ColumnInfo(ColumnFrequencyName)
     val name: String
 ){
     companion object{
         const val ColumnFrequencyCode="frequency_code"
+        const val ColumnFrequencyName = "frequency_name"
     }
 }
 
@@ -112,15 +117,17 @@ data class DatabaseRelapse(
     val relapseId : Long,
     @ColumnInfo(ColumnPatientId)
     val patientId : Long,
-    @ColumnInfo("start_date")
+    @ColumnInfo(ColumnStartDate)
     val startDate : Date,
-    @ColumnInfo("end_date")
-    val endDate : Date
+    @ColumnInfo(ColumnEndDate)
+    val endDate : Date,
 
 ){
     companion object{
         const val ColumnRelapseId ="relapse_id"
         const val ColumnPatientId = "to_patient"
+        const val ColumnEndDate = "end_date"
+        const val ColumnStartDate = "start_date"
     }
 }
 
@@ -144,11 +151,13 @@ data class SideEffect(
     @PrimaryKey(true)
     @ColumnInfo(ColumnSideEffectId)
     val sideEffectId :Long,
+    @ColumnInfo(ColumnsSideEffectName)
     val name : String
     )
 {
     companion object{
         const val ColumnSideEffectId = "side_effect_id"
+        const val ColumnsSideEffectName = "side_effect_name"
     }
 }
 
@@ -165,10 +174,15 @@ data class SideEffect(
     onDelete = CASCADE
 )])
 data class SideEffectToPatient(
+    @ColumnInfo(ColumnEntryId)
     val entryId : Long,
+    @ColumnInfo(ColumnPatientId)
     val patientId: Long,
+    @ColumnInfo(ColumnSideEffectId)
     val sideEffectId: Long,
+    @ColumnInfo(ColumnFurtherExplanation)
     val furtherExplanation : String = "",
+    @ColumnInfo(ColumnDateRecorded)
     val dateRecorded: Date
 
 ){
@@ -176,6 +190,8 @@ data class SideEffectToPatient(
         const val ColumnEntryId = "entry_id"
         const val ColumnPatientId = "patient_id"
         const val ColumnSideEffectId = "side_effect_id"
+        const val ColumnDateRecorded = "date_recorded"
+        const val ColumnFurtherExplanation= "explanation"
     }
 }
 
@@ -251,4 +267,12 @@ data class MedicinesGivenDetails(
     }
 }
 
-
+data class MedicinesAdministeredWithMedicinesGivenDetails(
+    @Embedded
+    val medicinesAdministered: MedicinesAdministered,
+    @Relation(
+        parentColumn = MedicinesAdministered.ColumnAdministeredId,
+        entityColumn = MedicinesGivenDetails.ColumnAdministeredId
+    )
+    val medicinesGivenDetails : List<MedicinesGivenDetails>
+)

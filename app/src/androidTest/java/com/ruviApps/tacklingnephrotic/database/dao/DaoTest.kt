@@ -8,9 +8,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.ruviApps.tacklingnephrotic.database.NephSyndDatabase
-import com.ruviApps.tacklingnephrotic.database.entities.CareTakerWithPatients
-import com.ruviApps.tacklingnephrotic.database.entities.ResultCode
-import com.ruviApps.tacklingnephrotic.database.entities.UrineResult
+import com.ruviApps.tacklingnephrotic.database.entities.*
 import com.ruviApps.tacklingnephrotic.domain.CareTaker
 import com.ruviApps.tacklingnephrotic.domain.Patient
 import com.ruviApps.tacklingnephrotic.extension.toDatabaseCareTaker
@@ -35,6 +33,12 @@ class DaoTest {
     private lateinit var careTakerDao: CareTakerDao
     private lateinit var patientDao: PatientDao
     private lateinit var resultDao: ResultDao
+    private lateinit var doctorDao : DoctorDao
+    private lateinit var medicineDao: MedicineDao
+    private lateinit var medicineUnitDao: MedicineUnitDao
+    private lateinit var frequencyDao: MedicineFrequencyDao
+    private lateinit var diseasesDao: DiseasesDao
+
     @get:Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
 
@@ -47,7 +51,79 @@ class DaoTest {
         careTakerDao =database.careTakerDao()
         patientDao = database.patientDao()
         resultDao = database.resultDao()
+        doctorDao = database.doctorDao()
+        medicineDao =database.medicineDao()
+        medicineUnitDao = database.medicineUnitDao()
+        frequencyDao = database.medicineFrequencyDao()
+            diseasesDao = database.diseaseDao()
+
     }
+
+suspend fun loadDatabaseForTesting(){
+//Insert a CareTaker
+    val careTaker = CareTaker(1,
+        "Vivek Gupta",
+        "itguru4all@gmail.com",
+        9891,0
+    )
+    careTakerDao.insertCareTaker(careTaker.toDatabaseCareTaker())
+
+//Insert two Patient
+    val patient_one = Patient(1,"Atharv Gupta",4,(19.3).toFloat(),"",careTaker.careTakerId)
+    val patient_two = Patient(2,"Utkarsh Gupta",7,(25.6).toFloat(),"",careTaker.careTakerId)
+
+    val patientList = mutableListOf<Patient>()
+    patientList.add(patient_one)
+    patientList.add(patient_two)
+    patientDao.insertAllPatient(*patientList.toDatabasePatient().toTypedArray())
+
+    ///Insert Results for both patients
+
+    //Three Results of Patient_one
+    val Patient_one_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
+        "Cold",Calendar.getInstance().time,patient_one.patientId)
+    resultDao.insertResult(Patient_one_Result_one)
+    val Patient_one_result_two = UrineResult(2,ResultCode.THREE_PLUS,
+        "Cough",Calendar.getInstance().time,patient_one.patientId)
+    resultDao.insertResult(Patient_one_result_two)
+    val Patient_one_result_three = UrineResult(3,ResultCode.TWO_PLUS,
+        "Recovered",Calendar.getInstance().time,patient_one.patientId)
+    resultDao.insertResult(Patient_one_result_three)
+
+    //Three Results of Patient_two
+    val Patient_two_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
+        "",Calendar.getInstance().time,patient_two.patientId)
+    resultDao.insertResult(Patient_two_Result_one)
+    val Patient_two_result_two = UrineResult(2,ResultCode.ONE_PLUS,
+        "",Calendar.getInstance().time,patient_two.patientId)
+    resultDao.insertResult(Patient_two_result_two)
+    val Patient_two_result_three = UrineResult(3,ResultCode.NEGATIVE,
+        "",Calendar.getInstance().time,patient_two.patientId)
+    resultDao.insertResult(Patient_two_result_three)
+
+//insert doctor
+    val fullName = FullName("AS ","Vasudev")
+    val contact = ContactInfo(8745,null,null)
+    val doctor = Doctor(1,fullName,contact)
+    doctorDao.insertDoctor(doctor)
+
+    //insert medicine
+    val medicine = Medicines(1,"Omnacortil Forte")
+    medicineDao.insertMedicine(medicine)
+
+//insert diseases
+    val diseases = Diseases(1,"Fever")
+    diseasesDao.insertDisease(diseases)
+
+//insert unit and frequency
+    val medicineUnit = MedicineUnit(1,"ml")
+    medicineUnitDao.insertMedicineUnit(medicineUnit)
+
+    val frequency = Frequency(1,"Once a Day")
+    frequencyDao.insertFrequency(frequency)
+
+
+}
 
     @After
     fun closeDb(){
@@ -181,4 +257,43 @@ class DaoTest {
         assertNotNull(patientWithResults.get(0).urineResults)
     }
 
+
+@Test
+fun testDifferentDao_newInsert_addedToDatabase()= runBlockingTest {
+    val fullName = FullName("AS ","Vasudev")
+    val contact = ContactInfo(8745,null,null)
+    val doctor = Doctor(1,fullName,contact)
+    doctorDao.insertDoctor(doctor)
+    val insertedDoctor = doctorDao.getDoctorById(doctor.doctorId)
+
+    val medicine = Medicines(1,"Omnacortil Forte")
+    medicineDao.insertMedicine(medicine)
+
+    val insertedMedicine = medicineDao.getMedicineById(medicine.medicineCode)
+
+    val diseases = Diseases(1,"Fever")
+    diseasesDao.insertDisease(diseases)
+
+    assertThat(insertedDoctor?.doctorId,`is`(1))
+    assertThat(insertedMedicine?.medicineCode,`is`(1))
+
+    val medicineUnit = MedicineUnit(1,"ml")
+    medicineUnitDao.insertMedicineUnit(medicineUnit)
+
+    val frequency = Frequency(1,"Once a Day")
+    frequencyDao.insertFrequency(frequency)
+
+    val insertedUnit = medicineUnitDao.getMedicineUnitIdByName(medicineUnit.unitName)
+    val insertedFrequency = frequencyDao.getFrequencyCodeByName(frequency.name)
+
+    assertThat(1,`is`(insertedUnit))
+    assertThat(1,`is`(insertedFrequency))
+
 }
+
+
+
+
+}
+
+

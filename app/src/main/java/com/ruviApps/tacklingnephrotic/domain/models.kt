@@ -1,8 +1,7 @@
 package com.ruviApps.tacklingnephrotic.domain
 
-import com.ruviApps.tacklingnephrotic.database.entities.ContactInfo
-import com.ruviApps.tacklingnephrotic.database.entities.DatabaseCareTaker
-import com.ruviApps.tacklingnephrotic.database.entities.FullName
+import androidx.room.ColumnInfo
+import com.ruviApps.tacklingnephrotic.database.entities.*
 import java.util.*
 
 data class Patient(
@@ -27,5 +26,21 @@ data class Result(
     val resultId : Long,
     val resultCode : String,
     val remarks : String?,
-    val recordedDate : Date
+    val recordedDate : Date,
+    val patientId : Long
+)
+
+
+data class Relapse(
+    val relapseId : Long,
+    val patientId : Long,
+    val startDate : Date,
+    val endDate : Date,
+)
+
+data class Consultation(
+    val consultId : Long,
+    val patientId : Long,
+    val visitDate : Date,
+    val consultedDoctorId : Long
 )

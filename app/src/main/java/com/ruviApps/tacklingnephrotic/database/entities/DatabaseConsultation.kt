@@ -95,8 +95,7 @@ data class PrescriptionDetails(
     val complaints : String = "",
     val diagnosis : String = "",
     val treatment : String = "",
-
-    @ColumnInfo("next_follow_up_date")
+    @ColumnInfo(ColumnNextFollowUp)
     val nextFollowUpDate : Date
 
 ){
@@ -104,6 +103,7 @@ data class PrescriptionDetails(
         const val ColumnPrescriptionId = "prescription_id"
         const val ColumnConsultId = "consult_id"
         const val ColumnDiseaseId = "disease_id"
+        const val ColumnNextFollowUp = "next_follow_up_date"
     }
 }
 
@@ -210,9 +210,9 @@ data class PrescriptionDetailsWithMedicineDetails(
 
 /**
  * @Transaction
- * @Query("Select * from PrescriptionDetails")
- * fun getPrescriptionDetailsWithMedicineDetails():
- * List<PrescriptionDetailsWithMedicineDetails>
+ * @Query("Select * from PrescriptionDetails where prescriptionId = :id")
+ * fun getPrescriptionDetailsWithMedicineDetails(id : Long):
+ * List<PrescriptionDetailsWithMedicineDetails>?
  */
 
 data class MedicineWithMedicineDetails(

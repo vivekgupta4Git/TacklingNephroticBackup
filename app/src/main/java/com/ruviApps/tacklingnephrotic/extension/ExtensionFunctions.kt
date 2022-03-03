@@ -1,11 +1,8 @@
 package com.ruviApps.tacklingnephrotic.extension
 
-import com.ruviApps.tacklingnephrotic.database.entities.ContactInfo
-import com.ruviApps.tacklingnephrotic.database.entities.DatabaseCareTaker
-import com.ruviApps.tacklingnephrotic.database.entities.DatabasePatient
-import com.ruviApps.tacklingnephrotic.database.entities.FullName
-import com.ruviApps.tacklingnephrotic.domain.CareTaker
-import com.ruviApps.tacklingnephrotic.domain.Patient
+import android.net.Uri
+import com.ruviApps.tacklingnephrotic.database.entities.*
+import com.ruviApps.tacklingnephrotic.domain.*
 
 //extension function on List of DatabaseCareTaker(Database Object) to convert it into List of CareTaker(Domain Object)
 fun List<DatabaseCareTaker>.toDomainCareTaker() : List<CareTaker>{
@@ -123,3 +120,77 @@ fun List<DatabasePatient>.toDomainPatient() : List<Patient>{
         )
     }
 }
+
+
+//extension function to convert List of Relapse database objects to list of domain relapse objects
+fun List<DatabaseRelapse>.toDomainRelapse() : List<Relapse>{
+ return map{
+     Relapse(it.relapseId,it.patientId,it.startDate,it.endDate)
+ }
+}
+
+fun DatabaseRelapse.toDomainRelapse() : Relapse{
+    return Relapse(relapseId,patientId,startDate,endDate)
+}
+
+fun Relapse.toDatabaseRelapse() : DatabaseRelapse{
+    return DatabaseRelapse(relapseId,patientId,startDate,endDate)
+}
+fun List<Relapse>.toDatabaseRelapse() : List<DatabaseRelapse>{
+    return map{
+        DatabaseRelapse(it.relapseId,it.patientId,it.startDate,it.endDate)
+    }
+}
+
+
+//extension function to convert List of Database Urine Result into domain Result
+fun List<UrineResult>.toDomainResult() : List<Result>{
+    return map{
+     Result(it.resultId,it.resultCode.name,it.remarks,it.recordedDate,it.urineResultOfPatientId)
+    }
+}
+
+fun UrineResult.toDomainResult() : Result{
+    return Result(resultId,resultCode.name,remarks,recordedDate,urineResultOfPatientId)
+}
+
+fun Result.toDatabaseUrineResult() : UrineResult{
+    val resultCode = ResultCode.valueOf(resultCode)
+    return UrineResult(resultId,resultCode,remarks,recordedDate, patientId)
+}
+
+fun List<Result>.toDatabaseUrineResult() : List<UrineResult>{
+    return map{
+        val resultCode = ResultCode.valueOf(it.resultCode)
+        UrineResult(it.resultId,resultCode,it.remarks,it.recordedDate,it.patientId)
+    }
+}
+
+
+//Extension function to convert Database Consultation to domain Consultation
+fun DatabaseConsultation.toDomainConsultation() : Consultation{
+    return Consultation(consultId,patientId,visitDate,consultedDoctorId)
+}
+fun List<DatabaseConsultation>.toDomainConsultation() : List<Consultation>{
+    return map{
+        Consultation(it.consultId,
+            it.patientId,
+            it.visitDate,
+            it.consultedDoctorId)
+    }
+}
+
+fun Consultation.toDatabaseConsultation() : DatabaseConsultation{
+    return DatabaseConsultation(consultId,patientId,visitDate,consultedDoctorId)
+}
+fun List<Consultation>.toDatabaseConsultation() : List<DatabaseConsultation>{
+    return map{
+        DatabaseConsultation(it.consultId,
+            it.patientId,
+            it.visitDate,
+            it.consultedDoctorId)
+    }
+}
+
+
+
