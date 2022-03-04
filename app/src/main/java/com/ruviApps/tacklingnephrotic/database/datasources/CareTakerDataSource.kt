@@ -1,6 +1,7 @@
 package com.ruviApps.tacklingnephrotic.database.datasources
 
 import com.ruviApps.tacklingnephrotic.database.dto.QueryResult
+import com.ruviApps.tacklingnephrotic.database.entities.CareTakerWithPatients
 import com.ruviApps.tacklingnephrotic.database.entities.DatabaseCareTaker
 
 interface CareTakerDataSource {
@@ -10,5 +11,5 @@ interface CareTakerDataSource {
     suspend fun saveCareTaker(careTaker: DatabaseCareTaker) : QueryResult<Unit>
     suspend fun saveAllCareTakers(caretakers : List<DatabaseCareTaker>) : QueryResult<Unit>
     suspend fun deleteAllCareTakers() : QueryResult<Unit>
-
+    suspend fun getPatientsUnderCareTaker(id : Long) : QueryResult<List<CareTakerWithPatients>>
 }
