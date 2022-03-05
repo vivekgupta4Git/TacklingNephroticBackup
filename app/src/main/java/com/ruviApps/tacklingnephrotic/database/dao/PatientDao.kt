@@ -24,10 +24,13 @@ interface PatientDao {
     suspend fun insertAllPatient(vararg patient : DatabasePatient)
 
     @Query("Select * from  ${TableName.PatientTable}")
-    suspend fun getAllPatient() : List<DatabasePatient>?
+    suspend fun getAllPatients() : List<DatabasePatient>
 
     @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")
-    suspend fun getPatientById(id : Long) : DatabasePatient?
+    suspend fun getPatientById(id : Long) : DatabasePatient
+
+    @Query("DELETE from ${TableName.PatientTable}")
+    suspend fun deleteAllPatients()
 
     @Transaction
     @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")

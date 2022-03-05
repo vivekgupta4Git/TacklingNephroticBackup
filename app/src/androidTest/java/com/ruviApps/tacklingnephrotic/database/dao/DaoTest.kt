@@ -5,20 +5,15 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.MediumTest
 import androidx.test.filters.SmallTest
 import com.ruviApps.tacklingnephrotic.database.NephSyndDatabase
-import com.ruviApps.tacklingnephrotic.database.dto.QueryResult
-import com.ruviApps.tacklingnephrotic.database.dto.onSuccess
 import com.ruviApps.tacklingnephrotic.database.entities.*
 import com.ruviApps.tacklingnephrotic.domain.CareTaker
 import com.ruviApps.tacklingnephrotic.domain.Patient
 import com.ruviApps.tacklingnephrotic.extension.toDatabaseCareTaker
 import com.ruviApps.tacklingnephrotic.extension.toDatabasePatient
-import com.ruviApps.tacklingnephrotic.repository.CareTakerLocalRepository
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.notNullValue
@@ -171,10 +166,10 @@ suspend fun loadDatabaseForTesting(){
         patientList.add(patient_two)
         patientDao.insertAllPatient(*patientList.toDatabasePatient().toTypedArray())
 
-        val patients = patientDao.getAllPatient()
+        val patients = patientDao.getAllPatients()
 
         //Relation between entities
-        val patientsUnderCareTaker: List<CareTakerWithPatients> = careTakerDao.getAllPatientsWithCareTakerId(careTaker.careTakerId)
+        val patientsUnderCareTaker: List<CareTakerWithPatients> = careTakerDao.patientsOfCareTaker(careTaker.careTakerId)
 
         assertNotNull(addedCareTaker)
         assertEquals(careTaker.careTakerId,addedCareTaker.ctId)

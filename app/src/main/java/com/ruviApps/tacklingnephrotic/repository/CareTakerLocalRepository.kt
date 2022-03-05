@@ -60,11 +60,10 @@ class CareTakerLocalRepository(
         }
     }
 
-    override suspend fun getPatientsUnderCareTaker(id: Long): QueryResult<List<CareTakerWithPatients>> =
+    override suspend fun getPatientsOfCareTaker(id: Long): QueryResult<List<CareTakerWithPatients>> =
         withContext(ioDispatcher){
             return@withContext try{
-
-                QueryResult.Success(careTakerDao.getAllPatientsWithCareTakerId(id))
+                QueryResult.Success(careTakerDao.patientsOfCareTaker(id))
             }catch (ex : Exception)
             {
                 QueryResult.Error(ex.localizedMessage,ex.hashCode())
@@ -72,4 +71,17 @@ class CareTakerLocalRepository(
             }
 
         }
+
+    override suspend fun getCareTakerWithPatients(): QueryResult<List<CareTakerWithPatients>> =
+        withContext(ioDispatcher){
+            return@withContext try{
+                QueryResult.Success(careTakerDao.getListOfCareTakersWithPatients())
+            }catch (ex : Exception)
+            {
+                QueryResult.Error(ex.localizedMessage,ex.hashCode())
+
+            }
+
+        }
+
 }

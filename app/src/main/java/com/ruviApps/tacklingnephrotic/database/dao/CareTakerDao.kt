@@ -25,8 +25,13 @@ interface CareTakerDao {
 
     @Transaction
     @Query("Select * from " + TableName.CaretakerTable + " where " + DatabaseCareTaker.ColumnCareTakerId + " = :id")
-    suspend fun getAllPatientsWithCareTakerId(id : Long) : List<CareTakerWithPatients>
+    suspend fun patientsOfCareTaker(id : Long) : List<CareTakerWithPatients>
 
     @Query("Delete from ${TableName.CaretakerTable}")
     suspend fun deleteAllCareTaker()
- }
+
+    @Transaction
+    @Query("SELECT * FROM ${TableName.CaretakerTable}")
+    fun getListOfCareTakersWithPatients(): List<CareTakerWithPatients>
+
+}
