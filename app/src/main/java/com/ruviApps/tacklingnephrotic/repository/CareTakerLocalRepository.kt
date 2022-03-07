@@ -14,19 +14,19 @@ import java.lang.Exception
  */
 class CareTakerLocalRepository(
     private val careTakerDao: CareTakerDao,
-    private val ioDispatcher : CoroutineDispatcher
+    private val ioDispatcher : CoroutineDispatcher = Dispatchers.IO
 ) : CareTakerDataSource{
 
     override suspend fun getCareTakers(): QueryResult<List<DatabaseCareTaker>> = withContext(ioDispatcher){
         return@withContext try { QueryResult.Success(careTakerDao.getAllCareTakers())
         }catch (ex : Exception)
-        {  QueryResult.Error(ex.localizedMessage,QueryResult.QUERY_FAILURE_STATUS_CODE) }
+        {  QueryResult.Error(ex.localizedMessage) }
     }
 
     override suspend fun getCareTaker(id :Long) : QueryResult<DatabaseCareTaker> = withContext(ioDispatcher){
       return@withContext try { QueryResult.Success(careTakerDao.getCareTakerById(id))
       }catch (ex : Exception)
-      {  QueryResult.Error(ex.localizedMessage,QueryResult.QUERY_FAILURE_STATUS_CODE) }
+      {  QueryResult.Error(ex.localizedMessage) }
   }
 
     override suspend fun saveCareTaker(careTaker: DatabaseCareTaker) =
@@ -35,7 +35,7 @@ class CareTakerLocalRepository(
                 QueryResult.Success(careTakerDao.insertCareTaker(careTaker),"Insert Successfully!")
             }catch (ex : Exception)
             {
-                QueryResult.Error(ex.localizedMessage,QueryResult.QUERY_FAILURE_STATUS_CODE)
+                QueryResult.Error(ex.localizedMessage)
             }
         }
 
@@ -45,7 +45,7 @@ class CareTakerLocalRepository(
           return@withContext  try {
             QueryResult.Success(careTakerDao.deleteAllCareTaker(),"All Records Deleted!")
             }catch (ex : Exception){
-                QueryResult.Error(ex.localizedMessage,QueryResult.QUERY_FAILURE_STATUS_CODE)
+                QueryResult.Error(ex.localizedMessage)
             }
         }
 

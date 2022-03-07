@@ -1,9 +1,6 @@
 package com.ruviApps.tacklingnephrotic.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.ruviApps.tacklingnephrotic.database.entities.TableName
 import com.ruviApps.tacklingnephrotic.database.entities.UrineResult
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +11,16 @@ interface ResultDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertResult(urineResult: UrineResult)
 
+    @Query("DELETE FROM ${TableName.UrineResultTable} where ${UrineResult.ColumnResultId} = :id")
+    suspend fun deleteResult(id : Long)
+
+    @Delete
+    suspend fun removeResult(result: UrineResult)
+
+    @Query("DELETE FROM ${TableName.UrineResultTable} ")
+    suspend fun deleteAllResults()
+
+
     /**
      * This method may decrease performance
      */
@@ -21,8 +28,8 @@ interface ResultDao {
     suspend fun insertAllResult(vararg urineResult: UrineResult)
 
 
-    @Query("Select * from " + TableName.UrineResultTable+ " where "
-            + UrineResult.ColumnPatientId + " = :id ORDER BY " + UrineResult.ColumnRecordedDate + " DESC")
+    @Query("Select * from ${TableName.UrineResultTable} where ${UrineResult.ColumnPatientId} = :id" +
+            " Order By ${UrineResult.ColumnRecordedDate} DESC")
     suspend fun getAllResultsForPatient(id : Long) : List<UrineResult>
 
 

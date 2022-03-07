@@ -9,12 +9,15 @@ import com.ruviApps.tacklingnephrotic.database.NephSyndDatabase
 import com.ruviApps.tacklingnephrotic.database.dto.QueryResult
 import com.ruviApps.tacklingnephrotic.database.dto.onFailure
 import com.ruviApps.tacklingnephrotic.database.dto.onSuccess
+import com.ruviApps.tacklingnephrotic.database.entities.ResultCode
+import com.ruviApps.tacklingnephrotic.database.entities.UrineResult
 import com.ruviApps.tacklingnephrotic.domain.CareTaker
 import com.ruviApps.tacklingnephrotic.domain.Patient
 import com.ruviApps.tacklingnephrotic.extension.toDatabaseCareTaker
 import com.ruviApps.tacklingnephrotic.extension.toDatabasePatient
 import com.ruviApps.tacklingnephrotic.repository.CareTakerLocalRepository
 import com.ruviApps.tacklingnephrotic.repository.PatientLocalRepository
+import com.ruviApps.tacklingnephrotic.repository.ResultLocalRepository
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,6 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
@@ -32,6 +36,7 @@ class LocalRepositoryTest {
     private lateinit var database : NephSyndDatabase
     private lateinit var careTakerRepo: CareTakerLocalRepository
     private lateinit var patientsRepo : PatientLocalRepository
+    private lateinit var resultsRepo : ResultLocalRepository
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -44,9 +49,13 @@ class LocalRepositoryTest {
             NephSyndDatabase::class.java
         ).allowMainThreadQueries().build()
 
-        careTakerRepo = CareTakerLocalRepository(database.careTakerDao(),Dispatchers.IO)
-        patientsRepo = PatientLocalRepository(database.patientDao(),Dispatchers.IO)
+        careTakerRepo = CareTakerLocalRepository(database.careTakerDao())
+        patientsRepo = PatientLocalRepository(database.patientDao())
+        resultsRepo = ResultLocalRepository(database.resultDao())
+
+
     }
+
 
     @After
     fun closeDB(){
@@ -116,5 +125,41 @@ class LocalRepositoryTest {
 
     }
 
+    @Test
+    fun saveResults_twoPatientsThreeResults_equalToRepoData() = runBlocking {
+        val careTaker = CareTaker(1,"Vivek Gupta","itguru",9891417738L,0)
+        careTakerRepo.saveCareTaker(careTaker.toDatabaseCareTaker())
+        val patientOne = Patient(1,"Atharv Gupta",4,19.8f,"",1)
+        val patientTwo = Patient(2,"Utkarsh",7,24f,"",1)
+        patientsRepo.savePatient(patientOne.toDatabasePatient())
+        patientsRepo.savePatient(patientTwo.toDatabasePatient())
+
+           //given results of patient one
+        val resultOne = UrineResult(1,ResultCode.TWO_PLUS,null,
+        Calendar.getInstance().time,1)
+        val resultTwo = UrineResult(2,ResultCode.THREE_PLUS,null,
+            Calendar.getInstance().time,1)
+        val resultThree = UrineResult(3,ResultCode.FOUR_PLUS,null,
+            Calendar.getInstance().time,1)
+
+        val list = listOf(resultOne,resultTwo,resultThree)
+
+        //when inserting results of patient one  only
+        resultsRepo.insertAllResults(list)
+
+
+        //then assert db has records of patient one only
+        val qR = resultsRepo.getResultsByPatientId(patientOne.patientId)
+        qR.onSuccess { data, message ->
+            assertEquals(3,data.size)
+
+        }
+        //and no records of patient two
+        val qR2 = resultsRepo.getResultsByPatientId(patientTwo.patientId)
+        qR2.onFailure { message, statusCode ->
+            assertEquals(QueryResult.QUERY_FAILURE_STATUS_CODE,statusCode)
+        }
+
+    }
 
 }

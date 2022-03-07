@@ -1,12 +1,13 @@
 package com.ruviApps.tacklingnephrotic.database.dto
 
 /**
- * A sealed class that encapsulates successful outcome with a value of type [T] and a message
- * or a failure with message and statusCode
+ * A sealed class that act as a wrapper above result of queries. It maps
+ * successful outcome with a value of type [T] and a message
+ * or a failure with message and statusCode having default value
  */
 sealed class QueryResult<out T : Any> {
     data class Success<out T : Any>(val data: T,val message : String? = "") : QueryResult<T>()
-    data class Error(val message: String?, val statusCode: Int? = null) : QueryResult<Nothing>()
+    data class Error(val message: String?, val statusCode: Int? = QUERY_FAILURE_STATUS_CODE) : QueryResult<Nothing>()
     companion object{
         const val QUERY_FAILURE_STATUS_CODE = 401
     }
