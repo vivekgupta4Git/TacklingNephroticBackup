@@ -5,37 +5,40 @@ import androidx.room.ForeignKey.Companion.CASCADE
 import java.util.*
 
 
-@Entity(tableName = TableName.OtherDiseasesToPatientTable, foreignKeys = [ForeignKey(
+@Entity(tableName = TableName.InfectionTable, foreignKeys = [ForeignKey(
     entity = DatabasePatient::class,
     parentColumns = [DatabasePatient.ColumnPatientId],
-    childColumns = [OtherDiseasesToPatient.ColumnToPatientId],
+    childColumns = [Infections.ColumnToPatientId],
     onDelete = CASCADE
 ),ForeignKey(
     entity = Diseases::class,
     parentColumns = [Diseases.ColumnDiseaseCode],
-    childColumns = [OtherDiseasesToPatient.ColumnDiseaseId],
+    childColumns = [Infections.ColumnDiseaseId],
     onDelete = CASCADE
 )],
 )
-data class OtherDiseasesToPatient(
+data class Infections(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(ColumnOtherDiseasesToPatientId)
-    val otherDiseaseDetailsId :Long,
+    @ColumnInfo(ColumnInfectionsId)
+    val infectionId :Long,
     @ColumnInfo(ColumnToPatientId)
     val toPatient: Long,
     @ColumnInfo(ColumnDiseaseId)
-    val diseasesID : Long,
-    @ColumnInfo("start_date")
+    val diseasesID : Long?,
+    @ColumnInfo(ColumnStartDate)
     val startDate : Date,
-    @ColumnInfo("end_date")
+    @ColumnInfo(ColumnEndDate)
     val endDate: Date,
-    @ColumnInfo("current_state")
+    @ColumnInfo(ColumnCurrentState)
     val CurrentState: DiseasesState
 ){
     companion object{
-        const val ColumnOtherDiseasesToPatientId = "odd_id"
+        const val ColumnInfectionsId = "infection_id"
         const val ColumnToPatientId = "to_patient_id"
         const val ColumnDiseaseId = "what_disease_id"
+        const val ColumnStartDate = "start_date"
+        const val ColumnEndDate = "end_date"
+        const val ColumnCurrentState = "current_state"
     }
 }
 
@@ -47,13 +50,13 @@ enum class DiseasesState{
  * patient can have multiple disease so one to many relationship
  *
  */
-data class PatientWithOtherDiseaseToPatient(
+data class PatientWithInfections(
     @Embedded val patient: DatabasePatient,
     @Relation(
         parentColumn = DatabasePatient.ColumnPatientId,
-        entityColumn = OtherDiseasesToPatient.ColumnToPatientId
+        entityColumn = Infections.ColumnToPatientId
             )
-    val allDiseasesDetailsOfPatient : List<OtherDiseasesToPatient>
+    val infectionsList : List<Infections>
 )
 
 //in dao usage
@@ -64,15 +67,15 @@ fun getPatientWithOtherDiseaseDetails(patientId : Long): List<PatientWithOtherDi
  */
 
 /**
- * For each disease there can be previous history record which are recorded in OtherDiseasesToPatient
+ * For each disease there can be previous history record which are recorded in Infection Table
  */
-data class DiseaseWithOtherDiseasesToPatient(
+data class DiseaseWithInfectionsToPatient(
     @Embedded val diseases: Diseases,
     @Relation(
         parentColumn = Diseases.ColumnDiseaseCode,
-        entityColumn = OtherDiseasesToPatient.ColumnDiseaseId
+        entityColumn = Infections.ColumnDiseaseId
     )
-    val diseasesToPatientDetails : List<OtherDiseasesToPatient>
+    val infectionsList : List<Infections>
 )
 
 //in dao usage

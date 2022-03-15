@@ -22,9 +22,9 @@ data class DatabaseCareTaker(
 
 data class ContactInfo(
     @ColumnInfo("primary_contact")
-    val primaryContact: Long,
+    val primaryContact: String,
     @ColumnInfo("secondary_contact")
-    val secondaryContact : Long?,
+    val secondaryContact : String?,
     @ColumnInfo("email")
     val email: String?
 
@@ -212,9 +212,9 @@ data class MedicinesAdministered(
     @PrimaryKey(true)
     @ColumnInfo(ColumnAdministeredId)
     val administeredId : Long,
-    @ColumnInfo(ColumnPatientId)
+    @ColumnInfo(ColumnPatientId,index=true)
     val patientId : Long,
-    @ColumnInfo(ColumnCareTakerId)
+    @ColumnInfo(ColumnCareTakerId,index=true)
     val careTakerId : Long
 
     )

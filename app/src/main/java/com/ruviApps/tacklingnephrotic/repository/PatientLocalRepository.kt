@@ -4,6 +4,7 @@ import com.ruviApps.tacklingnephrotic.database.dao.PatientDao
 import com.ruviApps.tacklingnephrotic.database.datasources.PatientsDataSource
 import com.ruviApps.tacklingnephrotic.database.dto.QueryResult
 import com.ruviApps.tacklingnephrotic.database.entities.DatabasePatient
+import com.ruviApps.tacklingnephrotic.database.entities.PatientWithConsultations
 import com.ruviApps.tacklingnephrotic.database.entities.PatientWithUrineResults
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ class PatientLocalRepository(
     private val patientDao: PatientDao,
     private val ioDispatcher : CoroutineDispatcher = Dispatchers.IO
 ) : PatientsDataSource{
-    override suspend fun savePatient(databasePatient: DatabasePatient): QueryResult<Unit>
+    override suspend fun savePatient(databasePatient: DatabasePatient): QueryResult<Long>
     = withContext(ioDispatcher){
         return@withContext try {
             QueryResult.Success(patientDao.insertPatient(databasePatient))
@@ -44,7 +45,7 @@ class PatientLocalRepository(
         {  QueryResult.Error(ex.localizedMessage )}
     }
 
-    override suspend fun deleteAllPatients(): QueryResult<Unit> = withContext(ioDispatcher){
+       override suspend fun deleteAllPatients(): QueryResult<Unit> = withContext(ioDispatcher){
         return@withContext try{
             QueryResult.Success(patientDao.deleteAllPatients())
         }catch (ex  :Exception){
@@ -52,11 +53,31 @@ class PatientLocalRepository(
         }
     }
 
+    override suspend fun deletePatient(databasePatient: DatabasePatient): QueryResult<Long> = withContext(ioDispatcher){
+        return@withContext try{
+            QueryResult.Success(patientDao.deletePatient(databasePatient))
+        }catch (e : Exception){
+            QueryResult.Error(e.localizedMessage)
+        }
+
+    }
+
     override suspend fun getPatientsWithUrineResults(patientId: Long): QueryResult<List<PatientWithUrineResults>> = withContext(ioDispatcher){
         return@withContext try{
             QueryResult.Success(patientDao.getPatientWithResults(patientId))
         }catch (ex : Exception){
             QueryResult.Error(ex.localizedMessage)
+        }
+    }
+
+    override suspend fun getPatientsAllAdvices(patientId: Long): QueryResult<List<PatientWithConsultations>> {
+        return withContext(ioDispatcher){
+            try{
+                QueryResult.Success(patientDao.getAdvicesForPatient(patientId))
+            }catch (ex : Exception)
+            {
+                QueryResult.Error(ex.localizedMessage)
+            }
         }
     }
 }

@@ -33,8 +33,8 @@ fun List<CareTaker>.toDatabaseCareTaker() : List<DatabaseCareTaker>{
         val fullName =  FullName(firstName,lastName)
 
         val email = it.email ?: ""
-        val primaryContact = it.primaryContact ?: 0
-        val secondaryContact = it.secondaryContact ?: 0
+        val primaryContact = it.primaryContact
+        val secondaryContact = it.secondaryContact
         val contact = ContactInfo(primaryContact,secondaryContact,email)
         DatabaseCareTaker(it.careTakerId,fullName,contact)
     }
@@ -46,8 +46,8 @@ fun CareTaker.toDatabaseCareTaker() : DatabaseCareTaker{
     val lastName = careTakerName?.substringAfterLast(" ") ?: ""
     val fullName =  FullName(firstName!!,lastName)          //if first name is null, We throw NPE
 
-    val primaryContact = primaryContact ?: 0
-    val secondaryContact = secondaryContact ?: 0
+    val primaryContact = primaryContact
+    val secondaryContact = secondaryContact
     val contact = ContactInfo(primaryContact,secondaryContact,email)
 
     return DatabaseCareTaker(careTakerId,fullName,contact)

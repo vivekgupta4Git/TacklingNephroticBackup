@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ruviApps.tacklingnephrotic.databinding.FragmentSlideshowBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SlideshowFragment : Fragment() {
 
@@ -23,7 +25,8 @@ class SlideshowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+            ViewModelProvider(this)[SlideshowViewModel::class.java]
+
 
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root

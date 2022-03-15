@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import java.util.*
 
 
 @Entity(tableName = TableName.DailyLogTable, foreignKeys = [ForeignKey(
@@ -26,17 +27,19 @@ import androidx.room.PrimaryKey
 data class DailyLog(
     @PrimaryKey(true)
     @ColumnInfo(ColumnLogId)
-    val logId : Long,
-    @ColumnInfo(ColumnPatientId)
-    val patientId : Long,
-    @ColumnInfo(ColumnPreviousResultId)
+    val logId: Long,
+    @ColumnInfo(ColumnPatientId, index = true)
+    val patientId: Long,
+    @ColumnInfo(ColumnPreviousResultId, index= true)
     val previousUrineResult: Long,
-    @ColumnInfo(ColumnMedicinesAdministered)
-    val medicinesAdministeredId : Long,
-    @ColumnInfo("nephrotic_state")
+    @ColumnInfo(ColumnMedicinesAdministered,index = true)
+    val medicinesAdministeredId: Long?,
+    @ColumnInfo(ColumnNephroticState)
     val nephroticState: NephroticState,
-    @ColumnInfo("health_status")
-    val healthStatus: HealthStatus
+    @ColumnInfo(ColumnHealthStatus)
+    val healthStatus: HealthStatus,
+    @ColumnInfo(ColumnRecordedDate)
+    val recordedDate: Date
     )
 {
 companion object{
@@ -44,7 +47,9 @@ companion object{
     const val ColumnPatientId = "patient_id"
     const val ColumnPreviousResultId ="previous_result_id"
     const val ColumnMedicinesAdministered = "medicines_administered"
-
+    const val ColumnNephroticState = "nephrotic_state"
+    const val ColumnHealthStatus = "health_status"
+    const val ColumnRecordedDate = "recorded_date"
 }
 }
 
@@ -54,7 +59,7 @@ enum class NephroticState{
     OBSERVATION
 }
 
-enum class HealthStatus{
+enum class HealthStatus {
     HEALTHY,
     UNHEALTHY
 }

@@ -52,3 +52,34 @@ data class FullName(
 fun getCareTakerWithPatients(): List<CareTakerWithPatients>
 
  */
+
+data class PatientInfo(
+    @Embedded
+    val patient : DatabasePatient,
+    @Relation(
+        parentColumn = DatabasePatient.ColumnPatientId,
+        entityColumn = DatabaseConsultation.ColumnPatientId
+    )
+    val consultation : DatabaseConsultation,
+    @Relation(
+        parentColumn = DatabasePatient.ColumnPatientId,
+        entityColumn = UrineResult.ColumnPatientId
+    )
+    val urineResults : List<UrineResult>,
+    @Relation(
+        parentColumn = DatabasePatient.ColumnPatientId,
+        entityColumn = DatabaseRelapse.ColumnPatientId
+    )
+    val relapses : List<DatabaseRelapse>,
+    @Relation(
+        parentColumn = DatabasePatient.ColumnPatientId,
+        entityColumn = Infections.ColumnToPatientId
+    )
+    val allInfectionDetailsOfPatient : List<Infections>,
+    @Relation(
+        parentColumn = DatabasePatient.ColumnPatientId,
+        entityColumn = DailyLog.ColumnPatientId
+    )
+    val Logs: List<DailyLog>
+
+)

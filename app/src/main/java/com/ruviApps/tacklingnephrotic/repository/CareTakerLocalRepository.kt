@@ -29,7 +29,7 @@ class CareTakerLocalRepository(
       {  QueryResult.Error(ex.localizedMessage) }
   }
 
-    override suspend fun saveCareTaker(careTaker: DatabaseCareTaker) =
+    override suspend fun saveCareTaker(careTaker: DatabaseCareTaker) : QueryResult<Long> =
         withContext(ioDispatcher){
             return@withContext try {
                 QueryResult.Success(careTakerDao.insertCareTaker(careTaker),"Insert Successfully!")
@@ -39,6 +39,14 @@ class CareTakerLocalRepository(
             }
         }
 
+    override suspend fun deleteCareTaker(id: Long): QueryResult<Unit> =
+        withContext(ioDispatcher){
+            return@withContext try{
+                QueryResult.Success(careTakerDao.deleteCareTaker(id),"CareTaker Deleted")
+            }catch (ex : Exception){
+                QueryResult.Error(ex.localizedMessage)
+            }
+        }
 
     override suspend fun deleteAllCareTakers() : QueryResult<Unit> =
         withContext(ioDispatcher) {

@@ -1,13 +1,8 @@
 package com.ruviApps.tacklingnephrotic.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.ruviApps.tacklingnephrotic.database.entities.DatabaseConsultation
-import com.ruviApps.tacklingnephrotic.database.entities.PrescribedMedicines
-import com.ruviApps.tacklingnephrotic.database.entities.PrescriptionDetails
-import com.ruviApps.tacklingnephrotic.database.entities.TableName
+import androidx.room.*
+import com.google.android.material.tabs.TabLayout
+import com.ruviApps.tacklingnephrotic.database.entities.*
 import java.util.*
 
 @Dao
@@ -17,11 +12,27 @@ interface ConsultationDao {
     suspend fun insertConsultation(databaseConsultation: DatabaseConsultation)
 
     @Query("Select * from ${TableName.ConsultationTable}")
-    suspend fun getAllConsultations() : List<DatabaseConsultation>?
+    suspend fun getAllConsultations() : List<DatabaseConsultation>
 
     @Query("Select * from ${TableName.ConsultationTable} where " +
             "${DatabaseConsultation.ColumnPatientId} =:id")
-    suspend fun getConsultationsForPatientById(id : Long) : List<DatabaseConsultation>?
+    suspend fun getConsultationsForPatientById(id : Long) : List<DatabaseConsultation>
+
+    @Delete
+    suspend fun deleteConsultation(databaseConsultation: DatabaseConsultation)
+
+    @Query("Select * From ${TableName.ConsultationTable} where ${DatabaseConsultation.ColumnDoctorId}")
+    suspend fun getConsultationsOfDoctor(id : Long) : List<DatabaseConsultation>
+
+    @Query("Select * from ${TableName.ConsultationTable} where " +
+            " ${DatabaseConsultation.ColumnPatientId} = :patientId And ${DatabaseConsultation.ColumnDoctorId} " +
+            " = :doctorId ORDER BY ${DatabaseConsultation.ColumnVisitDate} DESC")
+    suspend fun getConsultationId(patientId : Long,doctorId : Long) : List<DatabaseConsultation>
+
+
+    @Transaction
+    @Query("Select * from ${TableName.ConsultationTable} where ${DatabaseConsultation.ColumnConsultId} = :id")
+     fun getConsultationWithDetails(id : Long) : List<ConsultationWithDetails>
 
 }
 

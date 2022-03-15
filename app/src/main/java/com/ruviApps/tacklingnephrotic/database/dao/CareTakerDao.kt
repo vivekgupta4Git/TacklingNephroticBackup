@@ -1,6 +1,7 @@
 package com.ruviApps.tacklingnephrotic.database.dao
 
 import androidx.room.*
+import com.ruviApps.tacklingnephrotic.database.dto.QueryResult
 import com.ruviApps.tacklingnephrotic.database.entities.CareTakerWithPatients
 import com.ruviApps.tacklingnephrotic.database.entities.DatabaseCareTaker
 import com.ruviApps.tacklingnephrotic.database.entities.DatabasePatient
@@ -12,10 +13,10 @@ import kotlinx.coroutines.Deferred
 interface CareTakerDao {
 
    @Insert(onConflict = OnConflictStrategy.REPLACE)
-   suspend fun insertAllCareTakers(vararg databaseCareTaker: DatabaseCareTaker)
+   suspend fun insertAllCareTakers(vararg databaseCareTaker: DatabaseCareTaker) : List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-   suspend fun insertCareTaker(databaseCareTaker: DatabaseCareTaker)
+   suspend fun insertCareTaker(databaseCareTaker: DatabaseCareTaker) : Long
 
     @Query( "Select * from " + TableName.CaretakerTable)
    suspend fun getAllCareTakers(): List<DatabaseCareTaker>
@@ -29,6 +30,9 @@ interface CareTakerDao {
 
     @Query("Delete from ${TableName.CaretakerTable}")
     suspend fun deleteAllCareTaker()
+
+    @Delete
+    suspend fun deleteCareTaker(id : Long)
 
     @Transaction
     @Query("SELECT * FROM ${TableName.CaretakerTable}")

@@ -12,7 +12,7 @@ class TableName {
         /* 8 */     const val DoctorsTable = "doctors"
         /* 9 */     const val PrescriptionDetailsTable = "prescription_details"
         /* 10 */    const val PrescribedMedicinesTable = "prescribed_medicines"
-        /* 11 */    const val OtherDiseasesToPatientTable = "other_diseases"
+        /* 11 */    const val InfectionTable = "infection"
         /* 12 */    const val SideEffectTable = "side_effect"
         /* 13 */    const val MedicinesAdministeredTable = "medicines_given"
         /* 14 */    const val SideEffectToPatientTable = "side_effect_patient"

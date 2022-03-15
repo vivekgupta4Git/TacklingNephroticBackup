@@ -53,7 +53,7 @@ class DiseaseStateConverter{
      * convert Disease State to String value
      */
     @TypeConverter
-    fun fromDiseaseState(value : DiseasesState) = value.name
+    fun fromDiseaseState(value : DiseasesState) :String = value.name
 
     /**
      * Convert a String to Disease State
