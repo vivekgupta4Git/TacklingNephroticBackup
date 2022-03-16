@@ -22,7 +22,7 @@ data class CareTaker(
 
 
 
-data class Result(
+data class TestResult(
     val resultId : Long,
     val resultCode : String,
     val remarks : String?,

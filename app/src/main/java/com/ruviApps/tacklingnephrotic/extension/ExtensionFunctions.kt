@@ -1,6 +1,5 @@
 package com.ruviApps.tacklingnephrotic.extension
 
-import android.net.Uri
 import com.ruviApps.tacklingnephrotic.database.entities.*
 import com.ruviApps.tacklingnephrotic.domain.*
 
@@ -144,22 +143,22 @@ fun List<Relapse>.toDatabaseRelapse() : List<DatabaseRelapse>{
 
 
 //extension function to convert List of Database Urine Result into domain Result
-fun List<UrineResult>.toDomainResult() : List<Result>{
+fun List<UrineResult>.toDomainResult() : List<TestResult>{
     return map{
-     Result(it.resultId,it.resultCode.name,it.remarks,it.recordedDate,it.urineResultOfPatientId)
+     TestResult(it.resultId,it.resultCode.name,it.remarks,it.recordedDate,it.urineResultOfPatientId)
     }
 }
 
-fun UrineResult.toDomainResult() : Result{
-    return Result(resultId,resultCode.name,remarks,recordedDate,urineResultOfPatientId)
+fun UrineResult.toDomainResult() : TestResult{
+    return TestResult(resultId,resultCode.name,remarks,recordedDate,urineResultOfPatientId)
 }
 
-fun Result.toDatabaseUrineResult() : UrineResult{
+fun TestResult.toDatabaseUrineResult() : UrineResult{
     val resultCode = ResultCode.valueOf(resultCode)
     return UrineResult(resultId,resultCode,remarks,recordedDate, patientId)
 }
 
-fun List<Result>.toDatabaseUrineResult() : List<UrineResult>{
+fun List<TestResult>.toDatabaseUrineResult() : List<UrineResult>{
     return map{
         val resultCode = ResultCode.valueOf(it.resultCode)
         UrineResult(it.resultId,resultCode,it.remarks,it.recordedDate,it.patientId)
