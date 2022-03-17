@@ -89,9 +89,9 @@ data class PrescriptionDetails(
     @PrimaryKey(true)
     @ColumnInfo(ColumnPrescriptionId)
     val prescriptionId : Long,
-    @ColumnInfo(ColumnConsultId)
+    @ColumnInfo(ColumnConsultId,index=true)
     val consultID:Long,
-    @ColumnInfo(ColumnDiseaseId)
+    @ColumnInfo(ColumnDiseaseId,index=true)
     val diseaseId : Long,
     val complaints : String = "",
     val diagnosis : String = "",
@@ -181,15 +181,15 @@ data class PrescribedMedicines(
     @PrimaryKey(true)
     @ColumnInfo(ColumnMedicineDetailsId)
     val medicineDetailsId : Long,
-    @ColumnInfo(ColumnPrescriptionId)
+    @ColumnInfo(ColumnPrescriptionId,index=true)
     val prescriptionId: Long,
-    @ColumnInfo(ColumnMedicineId)
+    @ColumnInfo(ColumnMedicineId,index=true)
     val medicineId : Long,
     @ColumnInfo("medicine_qty")
     val medicineQty : String,
-    @ColumnInfo(ColumnMedicineUnitCode)
+    @ColumnInfo(ColumnMedicineUnitCode,index=true)
     val medicineUnit : Long,
-    @ColumnInfo(ColumnMedicineFrequencyId)
+    @ColumnInfo(ColumnMedicineFrequencyId,index=true)
     val medicineFrequency: Long
     ){
     companion object{

@@ -21,9 +21,9 @@ data class Infections(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(ColumnInfectionsId)
     val infectionId :Long,
-    @ColumnInfo(ColumnToPatientId)
+    @ColumnInfo(ColumnToPatientId,index=true)
     val toPatient: Long,
-    @ColumnInfo(ColumnDiseaseId)
+    @ColumnInfo(ColumnDiseaseId,index=true)
     val diseasesID : Long?,
     @ColumnInfo(ColumnStartDate)
     val startDate : Date,
