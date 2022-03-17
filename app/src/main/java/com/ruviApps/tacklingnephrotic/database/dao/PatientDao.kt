@@ -34,7 +34,7 @@ interface PatientDao {
     suspend fun deleteAllPatients()
 
     @Delete
-    suspend fun deletePatient(databasePatient: DatabasePatient) :Long
+    suspend fun deletePatient(databasePatient: DatabasePatient)
 
     @Transaction
     @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")

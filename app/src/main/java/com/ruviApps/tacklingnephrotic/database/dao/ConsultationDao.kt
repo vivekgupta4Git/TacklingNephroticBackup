@@ -21,7 +21,7 @@ interface ConsultationDao {
     @Delete
     suspend fun deleteConsultation(databaseConsultation: DatabaseConsultation)
 
-    @Query("Select * From ${TableName.ConsultationTable} where ${DatabaseConsultation.ColumnDoctorId}")
+    @Query("Select * From ${TableName.ConsultationTable} where ${DatabaseConsultation.ColumnDoctorId} =:id")
     suspend fun getConsultationsOfDoctor(id : Long) : List<DatabaseConsultation>
 
     @Query("Select * from ${TableName.ConsultationTable} where " +

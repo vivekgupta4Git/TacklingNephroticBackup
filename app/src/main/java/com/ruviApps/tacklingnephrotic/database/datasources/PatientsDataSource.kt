@@ -10,7 +10,7 @@ interface PatientsDataSource {
     suspend fun getPatientById(id : Long) : QueryResult<DatabasePatient>
     suspend fun saveAllPatients(patient: List<DatabasePatient>) : QueryResult<Unit>
     suspend fun deleteAllPatients() : QueryResult<Unit>
-    suspend fun deletePatient(databasePatient: DatabasePatient) : QueryResult<Long>
+    suspend fun deletePatient(databasePatient: DatabasePatient) : QueryResult<Unit>
     suspend fun getPatientsWithUrineResults(patientId : Long) : QueryResult<List<PatientWithUrineResults>>
     suspend fun getPatientsAllAdvices(patientId: Long) : QueryResult<List<PatientWithConsultations>>
 

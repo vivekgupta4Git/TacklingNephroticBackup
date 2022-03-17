@@ -18,7 +18,7 @@ import com.ruviApps.tacklingnephrotic.repository.CareTakerLocalRepository
 import com.ruviApps.tacklingnephrotic.repository.DailyLogLocalRepository
 import com.ruviApps.tacklingnephrotic.repository.PatientLocalRepository
 import com.ruviApps.tacklingnephrotic.repository.ResultLocalRepository
-import org.junit.Assert.*;
+import org.junit.Assert.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -68,8 +68,7 @@ class LocalRepositoryTest {
         val careTaker = CareTaker(1,
                                     "Vivek Gupta",
                                     "itguru4all@gmail.com",
-                                    9891417738L,
-                                            0L
+                                    "9891417738",null
                                 )
 
     val queryResult =  careTakerRepo.saveCareTaker(careTaker.toDatabaseCareTaker())
@@ -100,7 +99,7 @@ class LocalRepositoryTest {
     @Test
     fun patientsUnderCareTakerObservation_equalsToDataRetrievedFromRepo() = runBlocking{
         //given two patients are under observation for one careTaker
-        val careTaker = CareTaker(1,"Vivek Gupta","itguru",9891417738L,0)
+        val careTaker = CareTaker(1,"Vivek Gupta","itguru","9891417738",null)
         careTakerRepo.saveCareTaker(careTaker.toDatabaseCareTaker())
         val patientOne = Patient(1,"Atharv Gupta",4,19.8f,"",1)
         val patientTwo = Patient(2,"Utkarsh",7,24f,"",1)
@@ -129,7 +128,7 @@ class LocalRepositoryTest {
 
     @Test
     fun saveResults_twoPatientsThreeResults_equalToRepoData() = runBlocking {
-        val careTaker = CareTaker(1,"Vivek Gupta","itguru",9891417738L,0)
+        val careTaker = CareTaker(1,"Vivek Gupta","itguru","9891417738",null)
         careTakerRepo.saveCareTaker(careTaker.toDatabaseCareTaker())
         val patientOne = Patient(1,"Atharv Gupta",4,19.8f,"",1)
         val patientTwo = Patient(2,"Utkarsh",7,24f,"",1)
@@ -171,7 +170,7 @@ class LocalRepositoryTest {
     @Test
     fun saveLog_oneCareTakerOnePatientThreeResults_equalsToRepoData()= runBlocking {
 
-        val careTaker = CareTaker(1,"Vivek Gupta","itguru",9891417738L,0)
+        val careTaker = CareTaker(1,"Vivek Gupta","itguru","9891417738",null)
         careTakerRepo.saveCareTaker(careTaker.toDatabaseCareTaker())
         val patientOne = Patient(1,"Atharv Gupta",4,19.8f,"",1)
         patientsRepo.savePatient(patientOne.toDatabasePatient())

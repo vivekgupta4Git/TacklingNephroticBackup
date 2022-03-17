@@ -10,7 +10,7 @@ interface CareTakerDataSource {
     suspend fun getCareTaker(id : Long) : QueryResult<DatabaseCareTaker>
     suspend fun saveCareTaker(careTaker: DatabaseCareTaker) : QueryResult<Long>
     suspend fun saveAllCareTakers(caretakers : List<DatabaseCareTaker>) : QueryResult<List<Long>>
-    suspend fun deleteCareTaker(id: Long): QueryResult<Unit>
+    suspend fun deleteCareTaker(careTaker: DatabaseCareTaker): QueryResult<Unit>
     suspend fun deleteAllCareTakers() : QueryResult<Unit>
     suspend fun getPatientsOfCareTaker(id : Long) : QueryResult<List<CareTakerWithPatients>>
     suspend fun getCareTakerWithPatients() : QueryResult<List<CareTakerWithPatients>>

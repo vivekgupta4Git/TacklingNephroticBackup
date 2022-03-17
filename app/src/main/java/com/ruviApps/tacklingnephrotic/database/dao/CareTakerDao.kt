@@ -32,7 +32,7 @@ interface CareTakerDao {
     suspend fun deleteAllCareTaker()
 
     @Delete
-    suspend fun deleteCareTaker(id : Long)
+    suspend fun deleteCareTaker(careTaker: DatabaseCareTaker)
 
     @Transaction
     @Query("SELECT * FROM ${TableName.CaretakerTable}")

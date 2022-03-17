@@ -115,7 +115,7 @@ data class DatabaseRelapse(
     @PrimaryKey(true)
     @ColumnInfo(ColumnRelapseId)
     val relapseId : Long,
-    @ColumnInfo(ColumnPatientId)
+    @ColumnInfo(ColumnPatientId,index=true)
     val patientId : Long,
     @ColumnInfo(ColumnStartDate)
     val startDate : Date,
@@ -174,11 +174,12 @@ data class SideEffect(
     onDelete = CASCADE
 )])
 data class SideEffectToPatient(
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(ColumnEntryId)
     val entryId : Long,
-    @ColumnInfo(ColumnPatientId)
+    @ColumnInfo(ColumnPatientId,index=true)
     val patientId: Long,
-    @ColumnInfo(ColumnSideEffectId)
+    @ColumnInfo(ColumnSideEffectId,index=true)
     val sideEffectId: Long,
     @ColumnInfo(ColumnFurtherExplanation)
     val furtherExplanation : String = "",
@@ -243,17 +244,18 @@ data class MedicinesAdministered(
     onDelete = CASCADE
 )])
 data class MedicinesGivenDetails(
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(ColumnMedicineGivesDetailsId)
     val givenDetailsId : Long,
-    @ColumnInfo(ColumnAdministeredId)
+    @ColumnInfo(ColumnAdministeredId,index=true)
     val administeredId: Long,
-    @ColumnInfo(ColumnMedicineId)
+    @ColumnInfo(ColumnMedicineId,index=true)
     val medicineId : Long,
     @ColumnInfo(ColumnDateRecorded)
     val dateRecorded : Date,
     @ColumnInfo(ColumnQuantity)
     val quantity : Int,
-    @ColumnInfo(ColumnMedicineUnitId)
+    @ColumnInfo(ColumnMedicineUnitId,index=true)
     val medicineUnitId :Long,
     val remarks: String = ""
     ){

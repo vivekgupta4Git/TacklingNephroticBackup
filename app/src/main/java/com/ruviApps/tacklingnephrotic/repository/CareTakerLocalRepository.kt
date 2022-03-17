@@ -39,10 +39,10 @@ class CareTakerLocalRepository(
             }
         }
 
-    override suspend fun deleteCareTaker(id: Long): QueryResult<Unit> =
+    override suspend fun deleteCareTaker(careTaker: DatabaseCareTaker): QueryResult<Unit> =
         withContext(ioDispatcher){
             return@withContext try{
-                QueryResult.Success(careTakerDao.deleteCareTaker(id),"CareTaker Deleted")
+                QueryResult.Success(careTakerDao.deleteCareTaker(careTaker),"CareTaker Deleted")
             }catch (ex : Exception){
                 QueryResult.Error(ex.localizedMessage)
             }

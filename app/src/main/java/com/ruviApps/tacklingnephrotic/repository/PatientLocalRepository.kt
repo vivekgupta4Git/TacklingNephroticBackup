@@ -53,7 +53,7 @@ class PatientLocalRepository(
         }
     }
 
-    override suspend fun deletePatient(databasePatient: DatabasePatient): QueryResult<Long> = withContext(ioDispatcher){
+    override suspend fun deletePatient(databasePatient: DatabasePatient): QueryResult<Unit> = withContext(ioDispatcher){
         return@withContext try{
             QueryResult.Success(patientDao.deletePatient(databasePatient))
         }catch (e : Exception){

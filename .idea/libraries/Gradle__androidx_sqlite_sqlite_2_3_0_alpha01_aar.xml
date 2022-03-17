@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.sqlite:sqlite:2.3.0-alpha01@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3747cc8b7d034c829a388c9949bb1d3a/transformed/sqlite-2.3.0-alpha01/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3747cc8b7d034c829a388c9949bb1d3a/transformed/sqlite-2.3.0-alpha01/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3747cc8b7d034c829a388c9949bb1d3a/transformed/sqlite-2.3.0-alpha01/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/80800e4d9a179c474c9d164b8833c6ec/transformed/sqlite-2.3.0-alpha01/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/80800e4d9a179c474c9d164b8833c6ec/transformed/sqlite-2.3.0-alpha01/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/80800e4d9a179c474c9d164b8833c6ec/transformed/sqlite-2.3.0-alpha01/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

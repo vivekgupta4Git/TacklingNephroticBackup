@@ -99,7 +99,7 @@ data class PrescriptionDetails(
     @ColumnInfo(ColumnNextFollowUp)
     val nextFollowUpDate : Date,
     @ColumnInfo(ColumnPrescriptionSnaps)
-    val snapList : List<String>?
+    val snap : String
 
 ){
     companion object{

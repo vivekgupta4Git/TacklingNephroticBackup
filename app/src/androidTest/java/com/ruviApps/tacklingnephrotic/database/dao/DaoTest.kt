@@ -64,46 +64,46 @@ suspend fun loadDatabaseForTesting(){
     val careTaker = CareTaker(1,
         "Vivek Gupta",
         "itguru4all@gmail.com",
-        9891,0
+        "9891417738",null
     )
     careTakerDao.insertCareTaker(careTaker.toDatabaseCareTaker())
 
 //Insert two Patient
-    val patient_one = Patient(1,"Atharv Gupta",4,(19.3).toFloat(),"",careTaker.careTakerId)
-    val patient_two = Patient(2,"Utkarsh Gupta",7,(25.6).toFloat(),"",careTaker.careTakerId)
+    val patientOne = Patient(1,"Atharv Gupta",4,(19.3).toFloat(),"",careTaker.careTakerId)
+    val patientTwo = Patient(2,"Utkarsh Gupta",7,(25.6).toFloat(),"",careTaker.careTakerId)
 
     val patientList = mutableListOf<Patient>()
-    patientList.add(patient_one)
-    patientList.add(patient_two)
+    patientList.add(patientOne)
+    patientList.add(patientTwo)
     patientDao.insertAllPatient(*patientList.toDatabasePatient().toTypedArray())
 
     ///Insert Results for both patients
 
-    //Three Results of Patient_one
-    val Patient_one_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
-        "Cold",Calendar.getInstance().time,patient_one.patientId)
-    resultDao.insertResult(Patient_one_Result_one)
-    val Patient_one_result_two = UrineResult(2,ResultCode.THREE_PLUS,
-        "Cough",Calendar.getInstance().time,patient_one.patientId)
-    resultDao.insertResult(Patient_one_result_two)
-    val Patient_one_result_three = UrineResult(3,ResultCode.TWO_PLUS,
-        "Recovered",Calendar.getInstance().time,patient_one.patientId)
-    resultDao.insertResult(Patient_one_result_three)
+    //Three Results of patientOne
+    val patientOne_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
+        "Cold",Calendar.getInstance().time,patientOne.patientId)
+    resultDao.insertResult(patientOne_Result_one)
+    val patientOne_result_two = UrineResult(2,ResultCode.THREE_PLUS,
+        "Cough",Calendar.getInstance().time,patientOne.patientId)
+    resultDao.insertResult(patientOne_result_two)
+    val patientOne_result_three = UrineResult(3,ResultCode.TWO_PLUS,
+        "Recovered",Calendar.getInstance().time,patientOne.patientId)
+    resultDao.insertResult(patientOne_result_three)
 
-    //Three Results of Patient_two
-    val Patient_two_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
-        "",Calendar.getInstance().time,patient_two.patientId)
-    resultDao.insertResult(Patient_two_Result_one)
-    val Patient_two_result_two = UrineResult(2,ResultCode.ONE_PLUS,
-        "",Calendar.getInstance().time,patient_two.patientId)
-    resultDao.insertResult(Patient_two_result_two)
-    val Patient_two_result_three = UrineResult(3,ResultCode.NEGATIVE,
-        "",Calendar.getInstance().time,patient_two.patientId)
-    resultDao.insertResult(Patient_two_result_three)
+    //Three Results of patientTwo
+    val patientTwo_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
+        "",Calendar.getInstance().time,patientTwo.patientId)
+    resultDao.insertResult(patientTwo_Result_one)
+    val patientTwo_result_two = UrineResult(2,ResultCode.ONE_PLUS,
+        "",Calendar.getInstance().time,patientTwo.patientId)
+    resultDao.insertResult(patientTwo_result_two)
+    val patientTwo_result_three = UrineResult(3,ResultCode.NEGATIVE,
+        "",Calendar.getInstance().time,patientTwo.patientId)
+    resultDao.insertResult(patientTwo_result_three)
 
 //insert doctor
     val fullName = FullName("AS ","Vasudev")
-    val contact = ContactInfo(8745,null,null)
+    val contact = ContactInfo("8745",null,null)
     val doctor = Doctor(1,fullName,contact)
     doctorDao.insertDoctor(doctor)
 
@@ -138,7 +138,7 @@ suspend fun loadDatabaseForTesting(){
         val careTaker = CareTaker(1,
             "Vivek Gupta",
             "itguru4all@gmail.com",
-            9891,0
+            "9891417738",null
             )
 
 
@@ -153,17 +153,17 @@ suspend fun loadDatabaseForTesting(){
     }
 
     @Test
-    fun savePatient_TwoPatientWithCareTaker_addedToDatabase() = runBlockingTest {
-        val careTaker = CareTaker(1, "Vivek Gupta","itgurur4all@gmail.com",98941,0)
+    fun savepatientTwoPatientWithCareTaker_addedToDatabase() = runBlockingTest {
+        val careTaker = CareTaker(1, "Vivek Gupta","itgurur4all@gmail.com","",null)
         careTakerDao.insertCareTaker(careTaker.toDatabaseCareTaker())
     val addedCareTaker = careTakerDao.getCareTakerById(careTaker.careTakerId)
 
-        val patient_one = Patient(1,"Atharv Gupta",4,(19.3).toFloat(),"",careTaker.careTakerId)
-        val patient_two = Patient(2,"Utkarsh Gupta",7,(25.6).toFloat(),"",careTaker.careTakerId)
+        val patientOne = Patient(1,"Atharv Gupta",4,(19.3).toFloat(),"",careTaker.careTakerId)
+        val patientTwo = Patient(2,"Utkarsh Gupta",7,(25.6).toFloat(),"",careTaker.careTakerId)
 
         val patientList = mutableListOf<Patient>()
-        patientList.add(patient_one)
-        patientList.add(patient_two)
+        patientList.add(patientOne)
+        patientList.add(patientTwo)
         patientDao.insertAllPatient(*patientList.toDatabasePatient().toTypedArray())
 
         val patients = patientDao.getAllPatients()
@@ -175,8 +175,8 @@ suspend fun loadDatabaseForTesting(){
         assertEquals(careTaker.careTakerId,addedCareTaker.ctId)
 
         assertNotNull(patients)
-        assertEquals(patient_one.patientId,patients?.first()?.patientId)
-        assertEquals(patient_two.patientId,patients?.get(1)?.patientId)
+        assertEquals(patientOne.patientId,patients.first().patientId)
+        assertEquals(patientTwo.patientId, patients[1].patientId)
 
         //testing relation
         assertEquals(careTaker.careTakerId,
@@ -207,50 +207,50 @@ suspend fun loadDatabaseForTesting(){
     fun saveResult_OneCareTakerTwoPatientThreeResultsEach_addedToDatabase() = runBlockingTest {
 
         //one CareTaker
-        val careTaker = CareTaker(1, "Vivek Gupta","itgurur4all@gmail.com",98941,0)
+        val careTaker = CareTaker(1, "Vivek Gupta","itgurur4all@gmail.com","",null)
         careTakerDao.insertCareTaker(careTaker.toDatabaseCareTaker())
        // val addedCareTaker = careTakerDao.getCareTakerById(careTaker.careTakerId)
 
 
         //Two patients
-        val patient_one = Patient(1,"Atharv Gupta",4,19.3f,"",careTaker.careTakerId)
-        val patient_two = Patient(2,"Utkarsh Gupta",7,25.6f,"",careTaker.careTakerId)
+        val patientOne = Patient(1,"Atharv Gupta",4,19.3f,"",careTaker.careTakerId)
+        val patientTwo = Patient(2,"Utkarsh Gupta",7,25.6f,"",careTaker.careTakerId)
 
         val patientList = mutableListOf<Patient>()
-        patientList.add(patient_one)
-        patientList.add(patient_two)
+        patientList.add(patientOne)
+        patientList.add(patientTwo)
         patientDao.insertAllPatient(*patientList.toDatabasePatient().toTypedArray())
 
       //  val patients = patientDao.getAllPatient()
 
-        //Three Results of Patient_one
-        val Patient_one_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
-            "Cold",Calendar.getInstance().time,patient_one.patientId)
-        resultDao.insertResult(Patient_one_Result_one)
-        val Patient_one_result_two = UrineResult(2,ResultCode.THREE_PLUS,
-            "Cough",Calendar.getInstance().time,patient_one.patientId)
-        resultDao.insertResult(Patient_one_result_two)
-        val Patient_one_result_three = UrineResult(3,ResultCode.TWO_PLUS,
-            "Recovered",Calendar.getInstance().time,patient_one.patientId)
-        resultDao.insertResult(Patient_one_result_three)
+        //Three Results of patientOne
+        val patientOne_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
+            "Cold",Calendar.getInstance().time,patientOne.patientId)
+        resultDao.insertResult(patientOne_Result_one)
+        val patientOne_result_two = UrineResult(2,ResultCode.THREE_PLUS,
+            "Cough",Calendar.getInstance().time,patientOne.patientId)
+        resultDao.insertResult(patientOne_result_two)
+        val patientOne_result_three = UrineResult(3,ResultCode.TWO_PLUS,
+            "Recovered",Calendar.getInstance().time,patientOne.patientId)
+        resultDao.insertResult(patientOne_result_three)
 
-        //Three Results of Patient_two
-        val Patient_two_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
-            "",Calendar.getInstance().time,patient_two.patientId)
-        resultDao.insertResult(Patient_two_Result_one)
-        val Patient_two_result_two = UrineResult(2,ResultCode.ONE_PLUS,
-            "",Calendar.getInstance().time,patient_two.patientId)
-        resultDao.insertResult(Patient_two_result_two)
-        val Patient_two_result_three = UrineResult(3,ResultCode.NEGATIVE,
-            "",Calendar.getInstance().time,patient_two.patientId)
-        resultDao.insertResult(Patient_two_result_three)
-
-
-        val patientWithResults = patientDao.getPatientWithResults(patient_one.patientId)
+        //Three Results of patientTwo
+        val patientTwo_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
+            "",Calendar.getInstance().time,patientTwo.patientId)
+        resultDao.insertResult(patientTwo_Result_one)
+        val patientTwo_result_two = UrineResult(2,ResultCode.ONE_PLUS,
+            "",Calendar.getInstance().time,patientTwo.patientId)
+        resultDao.insertResult(patientTwo_result_two)
+        val patientTwo_result_three = UrineResult(3,ResultCode.NEGATIVE,
+            "",Calendar.getInstance().time,patientTwo.patientId)
+        resultDao.insertResult(patientTwo_result_three)
 
 
-        val resultsOfPatientOne = resultDao.getAllResultsForPatient(patient_one.patientId)
-        val resultsOfPatientTwo = resultDao.getAllResultsForPatient(patient_two.patientId)
+        val patientWithResults = patientDao.getPatientWithResults(patientOne.patientId)
+
+
+        val resultsOfPatientOne = resultDao.getAllResultsForPatient(patientOne.patientId)
+        val resultsOfPatientTwo = resultDao.getAllResultsForPatient(patientTwo.patientId)
 
         assertNotNull(resultsOfPatientOne)
         assertNotNull(resultsOfPatientTwo)
@@ -258,16 +258,16 @@ suspend fun loadDatabaseForTesting(){
 
         assertNotNull(patientWithResults)
         assertEquals(1,
-            patientWithResults.get(0).patient.patientId
+            patientWithResults[0].patient.patientId
             )
-        assertNotNull(patientWithResults.get(0).urineResults)
+        assertNotNull(patientWithResults[0].urineResults)
     }
 
 
 @Test
 fun testDifferentDao_newInsert_addedToDatabase()= runBlockingTest {
     val fullName = FullName("AS ","Vasudev")
-    val contact = ContactInfo(8745,null,null)
+    val contact = ContactInfo("",null,null)
     val doctor = Doctor(1,fullName,contact)
     doctorDao.insertDoctor(doctor)
     val insertedDoctor = doctorDao.getDoctorById(doctor.doctorId)
