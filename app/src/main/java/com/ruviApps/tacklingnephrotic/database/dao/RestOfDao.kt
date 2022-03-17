@@ -39,6 +39,9 @@ interface MedicineUnitDao{
     @Query("Select ${MedicineUnit.ColumnUnitId} from ${TableName.MedicineUnitTable} " +
             "where ${MedicineUnit.ColumnUnitName} like :name LIMIT 1")
     suspend fun getMedicineUnitIdByName(name : String) :Long
+
+    @Delete
+    suspend fun deleteMedicineUnit(medicineUnit: MedicineUnit)
 }
 
 @Dao

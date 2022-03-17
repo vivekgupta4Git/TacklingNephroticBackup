@@ -2,6 +2,7 @@ package com.ruviApps.tacklingnephrotic.database.dao
 
 import androidx.room.*
 import com.ruviApps.tacklingnephrotic.database.entities.DatabasePatient
+import com.ruviApps.tacklingnephrotic.database.entities.PatientWithConsultations
 import com.ruviApps.tacklingnephrotic.database.entities.PatientWithUrineResults
 import com.ruviApps.tacklingnephrotic.database.entities.TableName
 
@@ -9,7 +10,7 @@ import com.ruviApps.tacklingnephrotic.database.entities.TableName
 interface PatientDao {
 
     @Insert(onConflict =OnConflictStrategy.REPLACE)
-    suspend fun insertPatient(patient : DatabasePatient)
+    suspend fun insertPatient(patient : DatabasePatient) : Long
 
 
     /**
@@ -32,8 +33,15 @@ interface PatientDao {
     @Query("DELETE from ${TableName.PatientTable}")
     suspend fun deleteAllPatients()
 
+    @Delete
+    suspend fun deletePatient(databasePatient: DatabasePatient)
+
     @Transaction
     @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")
     suspend fun getPatientWithResults(id : Long) :  List<PatientWithUrineResults>
+
+    @Transaction
+    @Query("Select * from ${TableName.PatientTable} where ${DatabasePatient.ColumnPatientId} = :id")
+    suspend fun getAdvicesForPatient(id : Long) : List<PatientWithConsultations>
 
 }

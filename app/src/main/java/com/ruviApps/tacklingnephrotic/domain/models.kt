@@ -16,13 +16,13 @@ data class CareTaker(
     val careTakerId : Long,
     val careTakerName : String?,
     val email : String?,
-    val primaryContact:Long?,
-    val secondaryContact:Long?
+    val primaryContact:String,
+    val secondaryContact:String?
 )
 
 
 
-data class Result(
+data class TestResult(
     val resultId : Long,
     val resultCode : String,
     val remarks : String?,

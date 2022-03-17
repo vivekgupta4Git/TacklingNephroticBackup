@@ -20,11 +20,11 @@ data class DatabaseConsultation(
     @PrimaryKey(true)
     @ColumnInfo(ColumnConsultId)
     val consultId : Long,
-    @ColumnInfo(ColumnPatientId)
+    @ColumnInfo(ColumnPatientId,index=true)
     val patientId : Long,
-    @ColumnInfo("visit_date")
+    @ColumnInfo(ColumnVisitDate)
     val visitDate : Date,
-    @ColumnInfo(ColumnDoctorId)
+    @ColumnInfo(ColumnDoctorId,index=true)
     val consultedDoctorId : Long
 
 ){
@@ -32,6 +32,7 @@ data class DatabaseConsultation(
         const val ColumnConsultId = "consult_id"
         const val ColumnPatientId = "patient_id"
         const val ColumnDoctorId = "doctor_consulted_id"
+        const val ColumnVisitDate = "visit_date"
     }
 }
 
@@ -47,7 +48,7 @@ val patient : DatabasePatient,
         parentColumn = DatabasePatient.ColumnPatientId,
         entityColumn = DatabaseConsultation.ColumnPatientId
     )
-val consultations : List<DatabaseConsultation>
+val databaseConsultations : List<DatabaseConsultation>?
 )
 
 /**
@@ -88,15 +89,17 @@ data class PrescriptionDetails(
     @PrimaryKey(true)
     @ColumnInfo(ColumnPrescriptionId)
     val prescriptionId : Long,
-    @ColumnInfo(ColumnConsultId)
+    @ColumnInfo(ColumnConsultId,index=true)
     val consultID:Long,
-    @ColumnInfo(ColumnDiseaseId)
+    @ColumnInfo(ColumnDiseaseId,index=true)
     val diseaseId : Long,
     val complaints : String = "",
     val diagnosis : String = "",
     val treatment : String = "",
     @ColumnInfo(ColumnNextFollowUp)
-    val nextFollowUpDate : Date
+    val nextFollowUpDate : Date,
+    @ColumnInfo(ColumnPrescriptionSnaps)
+    val snap : String
 
 ){
     companion object{
@@ -104,6 +107,7 @@ data class PrescriptionDetails(
         const val ColumnConsultId = "consult_id"
         const val ColumnDiseaseId = "disease_id"
         const val ColumnNextFollowUp = "next_follow_up_date"
+        const val ColumnPrescriptionSnaps = "pics_of_prescription"
     }
 }
 
@@ -111,7 +115,7 @@ data class PrescriptionDetails(
  * In each Consultation  , there can be many prescription details for different diseases
  * so one to many relationship between Consultation  and Prescription Details
  */
-data class ConsultationWithPrescriptionDetails(
+data class ConsultationWithDetails(
     @Embedded
     val consultation: DatabaseConsultation,
     @Relation(
@@ -123,8 +127,8 @@ data class ConsultationWithPrescriptionDetails(
 
 /**
  * @Transaction
- * @Query("Select * from ConsultationDetails")
- * fun getConsultationWithPrescriptionDetails() : List<ConsultationWithPrescriptionDetails>
+ * @Query("Select * from DatabaseConsultation")
+ * fun getConsultationWithDetails() : List<ConsultationWithDetails>
  */
 
 
@@ -177,15 +181,15 @@ data class PrescribedMedicines(
     @PrimaryKey(true)
     @ColumnInfo(ColumnMedicineDetailsId)
     val medicineDetailsId : Long,
-    @ColumnInfo(ColumnPrescriptionId)
+    @ColumnInfo(ColumnPrescriptionId,index=true)
     val prescriptionId: Long,
-    @ColumnInfo(ColumnMedicineId)
+    @ColumnInfo(ColumnMedicineId,index=true)
     val medicineId : Long,
     @ColumnInfo("medicine_qty")
     val medicineQty : String,
-    @ColumnInfo(ColumnMedicineUnitCode)
+    @ColumnInfo(ColumnMedicineUnitCode,index=true)
     val medicineUnit : Long,
-    @ColumnInfo(ColumnMedicineFrequencyId)
+    @ColumnInfo(ColumnMedicineFrequencyId,index=true)
     val medicineFrequency: Long
     ){
     companion object{

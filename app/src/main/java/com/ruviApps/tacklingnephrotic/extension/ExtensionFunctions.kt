@@ -1,6 +1,5 @@
 package com.ruviApps.tacklingnephrotic.extension
 
-import android.net.Uri
 import com.ruviApps.tacklingnephrotic.database.entities.*
 import com.ruviApps.tacklingnephrotic.domain.*
 
@@ -33,8 +32,8 @@ fun List<CareTaker>.toDatabaseCareTaker() : List<DatabaseCareTaker>{
         val fullName =  FullName(firstName,lastName)
 
         val email = it.email ?: ""
-        val primaryContact = it.primaryContact ?: 0
-        val secondaryContact = it.secondaryContact ?: 0
+        val primaryContact = it.primaryContact
+        val secondaryContact = it.secondaryContact
         val contact = ContactInfo(primaryContact,secondaryContact,email)
         DatabaseCareTaker(it.careTakerId,fullName,contact)
     }
@@ -46,8 +45,8 @@ fun CareTaker.toDatabaseCareTaker() : DatabaseCareTaker{
     val lastName = careTakerName?.substringAfterLast(" ") ?: ""
     val fullName =  FullName(firstName!!,lastName)          //if first name is null, We throw NPE
 
-    val primaryContact = primaryContact ?: 0
-    val secondaryContact = secondaryContact ?: 0
+    val primaryContact = primaryContact
+    val secondaryContact = secondaryContact
     val contact = ContactInfo(primaryContact,secondaryContact,email)
 
     return DatabaseCareTaker(careTakerId,fullName,contact)
@@ -144,22 +143,22 @@ fun List<Relapse>.toDatabaseRelapse() : List<DatabaseRelapse>{
 
 
 //extension function to convert List of Database Urine Result into domain Result
-fun List<UrineResult>.toDomainResult() : List<Result>{
+fun List<UrineResult>.toDomainResult() : List<TestResult>{
     return map{
-     Result(it.resultId,it.resultCode.name,it.remarks,it.recordedDate,it.urineResultOfPatientId)
+     TestResult(it.resultId,it.resultCode.name,it.remarks,it.recordedDate,it.urineResultOfPatientId)
     }
 }
 
-fun UrineResult.toDomainResult() : Result{
-    return Result(resultId,resultCode.name,remarks,recordedDate,urineResultOfPatientId)
+fun UrineResult.toDomainResult() : TestResult{
+    return TestResult(resultId,resultCode.name,remarks,recordedDate,urineResultOfPatientId)
 }
 
-fun Result.toDatabaseUrineResult() : UrineResult{
+fun TestResult.toDatabaseUrineResult() : UrineResult{
     val resultCode = ResultCode.valueOf(resultCode)
     return UrineResult(resultId,resultCode,remarks,recordedDate, patientId)
 }
 
-fun List<Result>.toDatabaseUrineResult() : List<UrineResult>{
+fun List<TestResult>.toDatabaseUrineResult() : List<UrineResult>{
     return map{
         val resultCode = ResultCode.valueOf(it.resultCode)
         UrineResult(it.resultId,resultCode,it.remarks,it.recordedDate,it.patientId)

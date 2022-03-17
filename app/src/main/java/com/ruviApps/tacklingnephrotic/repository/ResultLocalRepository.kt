@@ -29,12 +29,6 @@ class ResultLocalRepository(
         {  QueryResult.Error(ex.localizedMessage) }
     }
 
-    override suspend fun deleteResultById(id: Long): QueryResult<Unit> = withContext(ioDispatcher){
-        return@withContext try {
-            QueryResult.Success(resultDao.deleteResult(id))
-        }catch (ex : Exception)
-        {  QueryResult.Error(ex.localizedMessage) }
-    }
 
     override suspend fun removeResult(result: UrineResult): QueryResult<Unit> {
         return withContext(ioDispatcher){
@@ -73,5 +67,13 @@ class ResultLocalRepository(
             QueryResult.Success(resultDao.getResultsForPatientUsingFlow(id))
         }catch (ex : Exception)
         {  QueryResult.Error(ex.localizedMessage) }
+    }
+
+    override suspend fun updateResult(result: UrineResult): QueryResult<Int> = withContext(ioDispatcher){
+        return@withContext try{
+            QueryResult.Success(resultDao.updateResult(result))
+        }catch (ex : Exception){
+            QueryResult.Error(ex.localizedMessage)
+        }
     }
 }

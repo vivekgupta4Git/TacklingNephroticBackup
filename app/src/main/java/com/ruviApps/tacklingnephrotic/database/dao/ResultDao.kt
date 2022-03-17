@@ -11,11 +11,11 @@ interface ResultDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertResult(urineResult: UrineResult)
 
-    @Query("DELETE FROM ${TableName.UrineResultTable} where ${UrineResult.ColumnResultId} = :id")
-    suspend fun deleteResult(id : Long)
-
     @Delete
     suspend fun removeResult(result: UrineResult)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateResult(result: UrineResult) : Int
 
     @Query("DELETE FROM ${TableName.UrineResultTable} ")
     suspend fun deleteAllResults()
