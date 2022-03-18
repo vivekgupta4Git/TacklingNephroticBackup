@@ -7,21 +7,27 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.ruviApps.tacklingnephrotic.ui.home.HomeFragment"
+        android:name="com.ruviapps.tacklingnephrotic.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.ruviApps.tacklingnephrotic.ui.gallery.GalleryFragment"
+        android:name="com.ruviapps.tacklingnephrotic.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.ruviApps.tacklingnephrotic.ui.slideshow.SlideshowFragment"
+        android:name="com.ruviapps.tacklingnephrotic.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_result"
+        android:name="com.ruviapps.tacklingnephrotic.ui.test_result.ResultPickerFragment"
+        android:label="Result"
+        tools:layout="@layout/result_picker_fragment"
+        />
     <deepLink
         android:id="@+id/deepLink"
         app:uri="0drd7hpogt" />
