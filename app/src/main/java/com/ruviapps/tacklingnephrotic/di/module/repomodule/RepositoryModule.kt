@@ -25,7 +25,7 @@ object RepositoryModule {
      */
     @Provides
     @ActivityScoped
-    fun providePatientRepo(@Named("PatientRepo") dao: PatientDao, ioDispatcher : CoroutineDispatcher=Dispatchers.IO): PatientLocalRepository {
+    fun providePatientRepo(dao: PatientDao, ioDispatcher : CoroutineDispatcher=Dispatchers.IO): PatientLocalRepository {
         return PatientLocalRepository( dao, ioDispatcher)
 
     }

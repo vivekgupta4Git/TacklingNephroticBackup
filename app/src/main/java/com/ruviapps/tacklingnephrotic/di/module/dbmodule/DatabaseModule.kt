@@ -17,7 +17,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    @Named("Patient")
+  //  @Named("Patient")
     fun providePatientDao(appDatabase : NephSyndDatabase) : PatientDao {
         return appDatabase.patientDao()
     }

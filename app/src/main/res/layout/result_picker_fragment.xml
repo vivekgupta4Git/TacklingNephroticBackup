@@ -8,11 +8,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.test_result.ResultPickerFragment">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <Button
+        android:id="@+id/result4PlusBtn"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4+" />
+    <Button
+        android:id="@+id/result3PlusBtn"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3+" />
+    <Button
+        android:id="@+id/result2PlusBtn"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2+" />
+    <Button
+        android:id="@+id/result1PlusBtn"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1+" />
+    <Button
+        android:id="@+id/resultTracePlusBtn"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trace" />
+    <Button
+        android:id="@+id/resultNegativePlusBtn"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Negative" />
 
+</LinearLayout>
 </FrameLayout>
 </layout>
