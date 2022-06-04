@@ -1,5 +1,6 @@
 package com.ruviapps.tacklingnephrotic.domain
 
+import java.time.LocalDate
 import java.util.*
 
 data class Patient(
@@ -21,19 +22,18 @@ data class CareTaker(
 
 
 data class TestResult(
-    val resultId : Long,
+    val recordedDate : LocalDate,
     var resultCode : String,
     val remarks : String?,
-    val recordedDate : Date,
     val patientId : Long
 )
 
 
-data class Relapse(
-    val relapseId : Long,
+data class State(
+    val stateId : Long,
     val patientId : Long,
-    val startDate : Date,
-    val endDate : Date,
+    val onDate : Date,
+    val patient_state : NephroticState,
 )
 
 data class Consultation(
@@ -42,3 +42,10 @@ data class Consultation(
     val visitDate : Date,
     val consultedDoctorId : Long
 )
+
+
+enum class NephroticState {
+    REMISSION,
+    RELAPSE,
+    OBSERVATION
+}

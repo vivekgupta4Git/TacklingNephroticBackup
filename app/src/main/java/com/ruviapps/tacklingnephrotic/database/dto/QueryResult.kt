@@ -32,7 +32,8 @@ inline fun <reified T : Any>QueryResult<T>.onSuccess(callback : (data : T,messag
 
 /**
  * extension function on QueryResult
- * using reified and inline keyword in the method explanation:
+ * using reified and inline keyword in the method,
+ * explanation:
  * To access the information about the type of class,
  * we use a keyword called reified in Kotlin.
  * In order to use the reified type, we need to use the inline function.

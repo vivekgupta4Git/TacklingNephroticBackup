@@ -68,18 +68,13 @@ data class PatientInfo(
     val urineResults : List<UrineResult>,
     @Relation(
         parentColumn = DatabasePatient.ColumnPatientId,
-        entityColumn = DatabaseRelapse.ColumnPatientId
+        entityColumn = DatabasePatientState.ColumnPatientId
     )
-    val relapses : List<DatabaseRelapse>,
+    val relaps : List<DatabasePatientState>,
     @Relation(
         parentColumn = DatabasePatient.ColumnPatientId,
         entityColumn = Infections.ColumnToPatientId
     )
     val allInfectionDetailsOfPatient : List<Infections>,
-    @Relation(
-        parentColumn = DatabasePatient.ColumnPatientId,
-        entityColumn = DailyLog.ColumnPatientId
-    )
-    val Logs: List<DailyLog>
 
-)
+    )

@@ -2,9 +2,12 @@ package com.ruviapps.tacklingnephrotic.di.module.usecasemodule
 
 import com.ruviapps.tacklingnephrotic.domain.use_cases.caretaker.*
 import com.ruviapps.tacklingnephrotic.domain.use_cases.patient.AddPatientUseCase
+import com.ruviapps.tacklingnephrotic.domain.use_cases.patient.GetPatientUseCase
 import com.ruviapps.tacklingnephrotic.domain.use_cases.patient.PatientUseCases
 import com.ruviapps.tacklingnephrotic.domain.use_cases.patient.RemovePatientUseCase
 import com.ruviapps.tacklingnephrotic.domain.use_cases.result.*
+import com.ruviapps.tacklingnephrotic.domain.use_cases.stateCalculator.CalculateStateFromReadingUseCase
+import com.ruviapps.tacklingnephrotic.domain.use_cases.stateCalculator.CalculateStateUseCases
 import com.ruviapps.tacklingnephrotic.repository.CareTakerLocalRepository
 import com.ruviapps.tacklingnephrotic.repository.PatientLocalRepository
 import com.ruviapps.tacklingnephrotic.repository.ResultLocalRepository
@@ -17,6 +20,7 @@ import dagger.hilt.android.scopes.ActivityScoped
 
 @InstallIn(ActivityComponent::class)
 @Module
+
 object UseCaseModule {
 
     @Provides
@@ -28,7 +32,10 @@ object UseCaseModule {
             deleteUrineResultUseCase = DeleteUrineResultUseCase(repo),
             updateUrineResultUseCase = UpdateUrineResultUseCase(repo),
             resultsOfAllPatientUseCase = ResultsOfAllPatientUseCase(repo),
-            allResultForPatientUseCase = AllResultForPatientUseCase(repo)
+            allResultForPatientUseCase = AllResultForPatientUseCase(repo),
+            getReadingsByIdUseCase = GetReadingByIdUseCase(repo),
+            getReadingsByDateUseCase = GetReadingByDateUseCase(repo),
+            getMissedReadingDatesUseCase = GetMissedReadingDatesUseCase(repo)
             )
         }
 
@@ -38,10 +45,18 @@ object UseCaseModule {
     fun providesPatientUseCase(repo: PatientLocalRepository) : PatientUseCases{
         return PatientUseCases(
             addPatientUseCase = AddPatientUseCase(repo),
-            removePatientUseCase = RemovePatientUseCase(repo)
+            removePatientUseCase = RemovePatientUseCase(repo),
+            getPatientUseCases = GetPatientUseCase(repo)
         )
     }
 
+    @Provides
+    @ActivityScoped
+    fun provideCalculateStateUseCase(repo: ResultLocalRepository) : CalculateStateUseCases{
+        return CalculateStateUseCases(
+            calculateStateFromReadingUseCae = CalculateStateFromReadingUseCase(repo =repo )
+        )
+    }
 
     @Provides
     @ActivityScoped

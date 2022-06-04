@@ -10,6 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.time.LocalDate
+import java.util.*
 import javax.inject.Inject
 
 
@@ -23,6 +25,27 @@ class ResultLocalRepository @Inject constructor(
             QueryResult.Success(resultDao.insertResult(urineResult),"Record Inserted")
         }catch (ex : Exception)
         {  QueryResult.Error(ex.localizedMessage) }
+    }
+
+   override suspend fun getReadingById(id: LocalDate): QueryResult<UrineResult> = withContext(ioDispatcher){
+        return@withContext try {
+            QueryResult.Success(resultDao.getReadingById(id))
+        }catch (ex : Exception)
+        {  QueryResult.Error(ex.localizedMessage) }
+    }
+
+    override suspend fun getReadingByDate(
+        id: Long,
+        from: LocalDate,
+        upTo: LocalDate,
+    ): QueryResult<List<UrineResult>> {
+        return withContext(ioDispatcher){
+            try{
+                QueryResult.Success(resultDao.getReadingByDate(id,from,upTo))
+            }catch (ex : Exception){
+                QueryResult.Error(ex.localizedMessage)
+            }
+        }
     }
 
     override suspend fun insertAllResults(urineResults : List<UrineResult>): QueryResult<Unit>  =withContext(ioDispatcher){

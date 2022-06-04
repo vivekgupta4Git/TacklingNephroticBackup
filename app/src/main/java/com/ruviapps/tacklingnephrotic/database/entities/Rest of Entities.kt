@@ -5,92 +5,6 @@ import androidx.room.ForeignKey.Companion.CASCADE
 import java.util.*
 
 
-@Entity(tableName = TableName.CaretakerTable)
-data class DatabaseCareTaker(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(ColumnCareTakerId)
-    val ctId : Long,
-    @Embedded val fullName: FullName,
-    @Embedded val contact : ContactInfo,
-
-    ){
-    companion object{
-        const val ColumnCareTakerId = "caretaker_id"
-    }
-}
-
-
-data class ContactInfo(
-    @ColumnInfo("primary_contact")
-    val primaryContact: String,
-    @ColumnInfo("secondary_contact")
-    val secondaryContact : String?,
-    @ColumnInfo("email")
-    val email: String?
-
-)
-
-
-@Entity(tableName = TableName.DoctorsTable)
-data class Doctor(
-    @PrimaryKey(true)
-    @ColumnInfo(ColumnDoctorId)
-    val doctorId : Long,
-    @Embedded
-    val fullName: FullName,
-    @Embedded
-    val contactInfo: ContactInfo,
-    ){
-    companion object{
-        const val ColumnDoctorId = "doctor_id"
-    }
-}
-
-@Entity(tableName = TableName.MedicinesTable)
-data class Medicines(
-    @PrimaryKey(true)
-    @ColumnInfo(ColumnMedicineCode)
-    val medicineCode : Long,
-    @ColumnInfo(ColumnMedicineName)
-    val medicineName : String,
-
-){
-    companion object{
-        const val ColumnMedicineCode = "medicine_code"
-        const val ColumnMedicineName = "medicine_name"
-    }
-}
-
-@Entity(tableName = TableName.DiseasesTable)
-data class Diseases(
-    @PrimaryKey(true)
-    @ColumnInfo(ColumnDiseaseCode)
-    val diseaseCode : Long,
-    @ColumnInfo(ColumnDiseaseName)
-    val diseaseName : String,
-){
-    companion object{
-        const val ColumnDiseaseCode = "diseases_code"
-        const val ColumnDiseaseName = "disease_name"
-    }
-}
-
-
-
-@Entity(tableName = TableName.MedicineUnitTable)
-data class MedicineUnit(
-    @PrimaryKey(true)
-    @ColumnInfo(ColumnUnitId)
-    val unitID : Long,
-    @ColumnInfo(ColumnUnitName)
-    val unitName : String
-){
-    companion object{
-        const val ColumnUnitId = "unit_id"
-        const val ColumnUnitName = "unit_name"
-    }
-}
-
 @Entity(tableName = TableName.FrequencyTable)
 data class Frequency(
     @PrimaryKey(true)
@@ -105,45 +19,12 @@ data class Frequency(
     }
 }
 
-@Entity(tableName = TableName.RelapsesTable, foreignKeys = [ForeignKey(
-    entity = DatabasePatient::class,
-    parentColumns = [DatabasePatient.ColumnPatientId],
-    childColumns = [DatabaseRelapse.ColumnPatientId],
-    onDelete = CASCADE
-)])
-data class DatabaseRelapse(
-    @PrimaryKey(true)
-    @ColumnInfo(ColumnRelapseId)
-    val relapseId : Long,
-    @ColumnInfo(ColumnPatientId,index=true)
-    val patientId : Long,
-    @ColumnInfo(ColumnStartDate)
-    val startDate : Date,
-    @ColumnInfo(ColumnEndDate)
-    val endDate : Date,
 
-){
-    companion object{
-        const val ColumnRelapseId ="relapse_id"
-        const val ColumnPatientId = "to_patient"
-        const val ColumnEndDate = "end_date"
-        const val ColumnStartDate = "start_date"
-    }
-}
-
-data class PatientWithRelapses(
-    @Embedded val patient: DatabasePatient,
-    @Relation(
-        parentColumn = DatabasePatient.ColumnPatientId,
-        entityColumn = DatabaseRelapse.ColumnPatientId
-    )
-    val relapses : List<DatabaseRelapse>
-)
 
 /**
  * @Transaction
  * @Query("Select * from Patient)
- * fun getPatientWithRelapses() : List<PatientWithRelapses>
+ * fun getPatientWithStates() : List<PatientWithStates>
  */
 
 @Entity(tableName = TableName.SideEffectTable)

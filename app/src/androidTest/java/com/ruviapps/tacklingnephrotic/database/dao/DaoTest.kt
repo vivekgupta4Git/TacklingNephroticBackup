@@ -21,6 +21,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.*
 import org.junit.runner.RunWith
+import java.time.LocalDate
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -80,25 +81,25 @@ suspend fun loadDatabaseForTesting(){
     ///Insert Results for both patients
 
     //Three Results of patientOne
-    val patientOne_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
-        "Cold",Calendar.getInstance().time,patientOne.patientId)
+    val patientOne_Result_one = UrineResult(LocalDate.now(),ResultCode.FOUR_PLUS,
+        "Cold",patientOne.patientId)
     resultDao.insertResult(patientOne_Result_one)
-    val patientOne_result_two = UrineResult(2,ResultCode.THREE_PLUS,
-        "Cough",Calendar.getInstance().time,patientOne.patientId)
+    val patientOne_result_two = UrineResult(LocalDate.now(),ResultCode.THREE_PLUS,
+        "Cough",patientOne.patientId)
     resultDao.insertResult(patientOne_result_two)
-    val patientOne_result_three = UrineResult(3,ResultCode.TWO_PLUS,
-        "Recovered",Calendar.getInstance().time,patientOne.patientId)
+    val patientOne_result_three = UrineResult(LocalDate.now(),ResultCode.TWO_PLUS,
+        "Recovered",patientOne.patientId)
     resultDao.insertResult(patientOne_result_three)
 
     //Three Results of patientTwo
-    val patientTwo_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
-        "",Calendar.getInstance().time,patientTwo.patientId)
+    val patientTwo_Result_one = UrineResult(LocalDate.now(),ResultCode.ONE_PLUS,
+        "",patientTwo.patientId)
     resultDao.insertResult(patientTwo_Result_one)
-    val patientTwo_result_two = UrineResult(2,ResultCode.ONE_PLUS,
-        "",Calendar.getInstance().time,patientTwo.patientId)
+    val patientTwo_result_two = UrineResult(LocalDate.now(),ResultCode.ONE_PLUS,
+        "",patientTwo.patientId)
     resultDao.insertResult(patientTwo_result_two)
-    val patientTwo_result_three = UrineResult(3,ResultCode.NEGATIVE,
-        "",Calendar.getInstance().time,patientTwo.patientId)
+    val patientTwo_result_three = UrineResult(LocalDate.now(),ResultCode.NEGATIVE,
+        "",patientTwo.patientId)
     resultDao.insertResult(patientTwo_result_three)
 
 //insert doctor
@@ -131,6 +132,34 @@ suspend fun loadDatabaseForTesting(){
     }
 
 
+    @Test
+    fun saveReading_DailyRecord_addedToDatabase()= runBlockingTest {
+        val careTaker = CareTaker(1,
+            "Vivek Gupta",
+            "itguru4all@gmail.com",
+            "9891417738",null
+        )
+
+        careTakerDao.insertCareTaker(careTaker.toDatabaseCareTaker())
+        val addedCareTaker = careTakerDao.getCareTakerById(careTaker.careTakerId)
+        val patientOne = Patient(1,"Atharv Gupta",4,(19.3).toFloat(),"",careTaker.careTakerId)
+      val addedPatientId =  patientDao.insertPatient(patientOne.toDatabasePatient())
+
+        val firstReading = UrineResult(LocalDate.now(),ResultCode.TRACE,"",addedPatientId)
+        resultDao.insertResult(firstReading)
+
+
+val from = LocalDate.now()
+ val upTo = from.plusDays(1)
+        assertThat(addedCareTaker,notNullValue())
+        assertEquals(careTaker.careTakerId,addedCareTaker.ctId)
+        assertEquals(careTaker.email,addedCareTaker.contact.email)
+
+
+
+
+
+    }
 
 
     @Test
@@ -224,25 +253,25 @@ suspend fun loadDatabaseForTesting(){
       //  val patients = patientDao.getAllPatient()
 
         //Three Results of patientOne
-        val patientOne_Result_one = UrineResult(1,ResultCode.FOUR_PLUS,
-            "Cold",Calendar.getInstance().time,patientOne.patientId)
+        val patientOne_Result_one = UrineResult(LocalDate.now(),ResultCode.FOUR_PLUS,
+            "Cold",patientOne.patientId)
         resultDao.insertResult(patientOne_Result_one)
-        val patientOne_result_two = UrineResult(2,ResultCode.THREE_PLUS,
-            "Cough",Calendar.getInstance().time,patientOne.patientId)
+        val patientOne_result_two = UrineResult(LocalDate.now(),ResultCode.THREE_PLUS,
+            "Cough",patientOne.patientId)
         resultDao.insertResult(patientOne_result_two)
-        val patientOne_result_three = UrineResult(3,ResultCode.TWO_PLUS,
-            "Recovered",Calendar.getInstance().time,patientOne.patientId)
+        val patientOne_result_three = UrineResult(LocalDate.now(),ResultCode.TWO_PLUS,
+            "Recovered",patientOne.patientId)
         resultDao.insertResult(patientOne_result_three)
 
         //Three Results of patientTwo
-        val patientTwo_Result_one = UrineResult(1,ResultCode.ONE_PLUS,
-            "",Calendar.getInstance().time,patientTwo.patientId)
+        val patientTwo_Result_one = UrineResult(LocalDate.now(),ResultCode.ONE_PLUS,
+            "",patientTwo.patientId)
         resultDao.insertResult(patientTwo_Result_one)
-        val patientTwo_result_two = UrineResult(2,ResultCode.ONE_PLUS,
-            "",Calendar.getInstance().time,patientTwo.patientId)
+        val patientTwo_result_two = UrineResult(LocalDate.now(),ResultCode.ONE_PLUS,
+            "",patientTwo.patientId)
         resultDao.insertResult(patientTwo_result_two)
-        val patientTwo_result_three = UrineResult(3,ResultCode.NEGATIVE,
-            "",Calendar.getInstance().time,patientTwo.patientId)
+        val patientTwo_result_three = UrineResult(LocalDate.now(),ResultCode.NEGATIVE,
+            "",patientTwo.patientId)
         resultDao.insertResult(patientTwo_result_three)
 
 

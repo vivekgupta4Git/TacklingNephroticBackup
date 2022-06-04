@@ -14,11 +14,12 @@ import com.ruviapps.tacklingnephrotic.R
 import com.ruviapps.tacklingnephrotic.database.entities.ResultCode
 import com.ruviapps.tacklingnephrotic.databinding.ResultPickerFragmentBinding
 import com.ruviapps.tacklingnephrotic.domain.TestResult
+import com.ruviapps.tacklingnephrotic.ui.home.HomeFragment
 import com.ruviapps.tacklingnephrotic.utility.Event
 import com.ruviapps.tacklingnephrotic.utility.EventObserver
 import com.ruviapps.tacklingnephrotic.utility.NavigationCommand
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.time.*
 
 
 @AndroidEntryPoint
@@ -34,8 +35,7 @@ class ResultPickerFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = ResultPickerFragmentBinding.inflate(layoutInflater)
-        viewModel.setLog()
-        viewModel.initializeDatabase()
+      //  viewModel.initializeDatabase()
         return binding.root
     }
 
@@ -46,8 +46,8 @@ class ResultPickerFragment : Fragment() {
         viewModel.navigateToDashBoard.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { command ->
                 when(command){
-                    is NavigationCommand.To ->
-                        findNavController().navigate(command.resId)
+                    is NavigationCommand.ToDirection ->
+                        findNavController().navigate(command.directions)
                     is NavigationCommand.ShowError -> {
                         Toast.makeText(requireContext(),command.errMsg,Toast.LENGTH_SHORT).show()
                     }
@@ -58,31 +58,36 @@ class ResultPickerFragment : Fragment() {
 
 
         binding.result1PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(0,
+            viewModel.saveResult(TestResult(LocalDate.now(),
                 ResultCode.ONE_PLUS.name,
                 "",
-                Calendar.getInstance().time,
-                0))
+                1))
+
 
         }
         binding.resultTracePlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(0, ResultCode.TRACE.name,"", Calendar.getInstance().time,1))
+            viewModel.saveResult(TestResult(  LocalDate.now(),ResultCode.TRACE.name,"",
+               1))
 
         }
         binding.result2PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(0, ResultCode.TWO_PLUS.name,"", Calendar.getInstance().time,1))
+            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.TWO_PLUS.name,
+                "",1))
 
         }
         binding.result3PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(0, ResultCode.THREE_PLUS.name,"", Calendar.getInstance().time,1))
+            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.THREE_PLUS.name,"",
+                1))
 
         }
         binding.result4PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(0, ResultCode.FOUR_PLUS.name,"", Calendar.getInstance().time,1))
+            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.FOUR_PLUS.name,
+                "",1))
 
         }
         binding.resultNegativePlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(0, ResultCode.NEGATIVE.name,"", Calendar.getInstance().time,1))
+            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.NEGATIVE.name,
+                "",1))
 
         }
 
