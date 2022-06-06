@@ -1,10 +1,13 @@
 package com.ruviapps.tacklingnephrotic.converters
 
+import android.annotation.SuppressLint
 import androidx.room.TypeConverter
 import com.ruviapps.tacklingnephrotic.database.entities.DiseasesState
-import com.ruviapps.tacklingnephrotic.database.entities.HealthStatus
-import com.ruviapps.tacklingnephrotic.database.entities.NephroticState
 import com.ruviapps.tacklingnephrotic.database.entities.ResultCode
+import com.ruviapps.tacklingnephrotic.domain.NephroticState
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 /**
@@ -34,17 +37,37 @@ class DateConverter {
     /**
      * Convert from timestamp(Long) to Date
      */
+    @SuppressLint("NewApi")
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
+    fun fromTimestamp(value: Long): LocalDate {
+        return LocalDate.ofEpochDay(value)
+    }
+
+    /**
+     * Convert Date to timestamp (Long)
+     */
+    @SuppressLint("NewApi")
+    @TypeConverter
+    fun dateToTimestamp(date: LocalDate): Long {
+        return date.toEpochDay()
+    }
+}
+
+class DateConverter2 {
+    /**
+     * Convert from timestamp(Long) to Date
+     */
+    @TypeConverter
+    fun fromTimestamp(value: Long): Date {
+        return Date(value)
     }
 
     /**
      * Convert Date to timestamp (Long)
      */
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
+    fun dateToTimestamp(date: Date): Long {
+        return date.time
     }
 }
 
@@ -64,31 +87,42 @@ class DiseaseStateConverter{
     }
 
 }
+/*
 class HeathStatusConverter{
-    /**
+    */
+/**
      * convert health Status to String value
-     */
+     *//*
+
     @TypeConverter
     fun fromHealthStatus(value : HealthStatus) = value.name
 
-    /**
+    */
+/**
      * Convert a String to Health Status
-     */
+     *//*
+
     @TypeConverter
     fun toHealthStatus(value : String): HealthStatus {
         return (HealthStatus.valueOf(value))
     }
 }
+
+*/
 class NephroticStateConverter{
-    /**
+
+/**
      * convert nephrotic state to String value
      */
+
     @TypeConverter
     fun fromNephroticState(value : NephroticState) = value.name
 
-    /**
+
+/**
      * Convert a String to Nephrotic State
      */
+
     @TypeConverter
     fun toNephroticState(value : String): NephroticState {
         return (NephroticState.valueOf(value))

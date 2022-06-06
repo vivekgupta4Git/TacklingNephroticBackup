@@ -8,5 +8,9 @@ data class UrineResultUseCases @Inject constructor(
     val deleteUrineResultUseCase: DeleteUrineResultUseCase,
     val updateUrineResultUseCase: UpdateUrineResultUseCase,
     val resultsOfAllPatientUseCase: ResultsOfAllPatientUseCase,
-    val allResultForPatientUseCase: AllResultForPatientUseCase
+    val allResultForPatientUseCase: AllResultForPatientUseCase,
+    val getReadingsByIdUseCase: GetReadingByIdUseCase,
+    val getReadingsByDateUseCase: GetReadingByDateUseCase,
+    val getMissedReadingDatesUseCase: GetMissedReadingDatesUseCase
+
 )

@@ -9,7 +9,7 @@ sealed class NavigationCommand {
     /**
      * navigate to a direction
      */
-   // data class To(val directions: NavDirections) : NavigationCommand()
+    data class ToDirection(val directions: NavDirections) : NavigationCommand()
         data class To(val resId : Int) : NavigationCommand()
     /**
      * navigate back to the previous fragment

@@ -2,6 +2,7 @@ package com.ruviapps.tacklingnephrotic.database.entities
 
 import androidx.room.*
 import androidx.room.ForeignKey.Companion.CASCADE
+import java.time.LocalDate
 import java.util.*
 
 @Entity(tableName = TableName.UrineResultTable, foreignKeys = [
@@ -10,22 +11,23 @@ import java.util.*
     childColumns = [UrineResult.ColumnPatientId],
     onDelete = CASCADE)])
 data class UrineResult(
-    @PrimaryKey(true)
-    @ColumnInfo(ColumnResultId)
-    val resultId : Long,
-    @ColumnInfo("result_code")
-    val resultCode : ResultCode,
-    val remarks : String?,
+    @PrimaryKey(false)
     @ColumnInfo(ColumnRecordedDate, defaultValue = "'CURRENT_TIMESTAMP'")
-    val recordedDate : Date,
+    val recordedDate : LocalDate,
+    @ColumnInfo(ColumnResultCode)
+    val resultCode : ResultCode,
+    @ColumnInfo(ColumnRemarks)
+    val remarks : String?,
     @ColumnInfo(ColumnPatientId,index=true)
     val urineResultOfPatientId : Long
 
 ){
     companion object{
-        const val ColumnResultId = "result_id"
+      //  const val ColumnResultId = "result_id"
         const val ColumnPatientId = "urine_result_patient_id"
         const val ColumnRecordedDate = "recorded_date"
+        const val ColumnResultCode = "result_code"
+        const val ColumnRemarks = "remarks"
     }
 }
 

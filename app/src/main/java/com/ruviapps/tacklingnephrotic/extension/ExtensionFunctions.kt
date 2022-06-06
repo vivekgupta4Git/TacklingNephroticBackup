@@ -121,23 +121,23 @@ fun List<DatabasePatient>.toDomainPatient() : List<Patient>{
 }
 
 
-//extension function to convert List of Relapse database objects to list of domain relapse objects
-fun List<DatabaseRelapse>.toDomainRelapse() : List<Relapse>{
+//extension function to convert List of state database objects to list of domain state objects
+fun List<DatabasePatientState>.toDomainState() : List<State>{
  return map{
-     Relapse(it.relapseId,it.patientId,it.startDate,it.endDate)
+     State(it.stateId,it.patientId,it.onDate,it.patient_state)
  }
 }
 
-fun DatabaseRelapse.toDomainRelapse() : Relapse{
-    return Relapse(relapseId,patientId,startDate,endDate)
+fun DatabasePatientState.toDomainState() : State{
+    return State(stateId,patientId,onDate,patient_state)
 }
 
-fun Relapse.toDatabaseRelapse() : DatabaseRelapse{
-    return DatabaseRelapse(relapseId,patientId,startDate,endDate)
+fun State.toDatabaseRelapse() : DatabasePatientState{
+    return DatabasePatientState(stateId,patient_state,patientId,onDate)
 }
-fun List<Relapse>.toDatabaseRelapse() : List<DatabaseRelapse>{
+fun List<State>.toDatabaseStates() : List<DatabasePatientState>{
     return map{
-        DatabaseRelapse(it.relapseId,it.patientId,it.startDate,it.endDate)
+        DatabasePatientState(it.stateId,it.patient_state,it.patientId,it.onDate)
     }
 }
 
@@ -145,23 +145,23 @@ fun List<Relapse>.toDatabaseRelapse() : List<DatabaseRelapse>{
 //extension function to convert List of Database Urine Result into domain Result
 fun List<UrineResult>.toDomainResult() : List<TestResult>{
     return map{
-     TestResult(it.resultId,it.resultCode.name,it.remarks,it.recordedDate,it.urineResultOfPatientId)
+     TestResult(it.recordedDate,it.resultCode.name,it.remarks,it.urineResultOfPatientId)
     }
 }
 
 fun UrineResult.toDomainResult() : TestResult{
-    return TestResult(resultId,resultCode.name,remarks,recordedDate,urineResultOfPatientId)
+    return TestResult(recordedDate,resultCode.name,remarks,urineResultOfPatientId)
 }
 
 fun TestResult.toDatabaseUrineResult() : UrineResult{
     val resultCode = ResultCode.valueOf(resultCode)
-    return UrineResult(resultId,resultCode,remarks,recordedDate, patientId)
+    return UrineResult(recordedDate,resultCode,remarks, patientId)
 }
 
 fun List<TestResult>.toDatabaseUrineResult() : List<UrineResult>{
     return map{
         val resultCode = ResultCode.valueOf(it.resultCode)
-        UrineResult(it.resultId,resultCode,it.remarks,it.recordedDate,it.patientId)
+        UrineResult(it.recordedDate,resultCode,it.remarks,it.patientId)
     }
 }
 

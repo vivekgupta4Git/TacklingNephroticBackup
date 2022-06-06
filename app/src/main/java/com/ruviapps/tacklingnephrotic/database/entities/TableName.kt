@@ -8,7 +8,7 @@ class TableName {
         /* 4 */     const val DiseasesTable = "diseases"
         /* 5 */     const val MedicinesTable = "medicines"
         /* 6 */     const val ConsultationTable = "consultations"
-        /* 7 */     const val RelapsesTable = "relapses"
+        /* 7 */     const val StateTable = "state"
         /* 8 */     const val DoctorsTable = "doctors"
         /* 9 */     const val PrescriptionDetailsTable = "prescription_details"
         /* 10 */    const val PrescribedMedicinesTable = "prescribed_medicines"
@@ -19,6 +19,5 @@ class TableName {
         /* 15 */    const val MedicineUnitTable = "medicine_units"
         /* 16 */    const val FrequencyTable = "medicine_frequency"
         /* 17 */    const val MedicinesGivenDetailsTable = "medicines_given_details"
-        /* 18 */    const val DailyLogTable = "daily_log"
     }
 }

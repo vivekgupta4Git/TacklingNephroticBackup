@@ -4,11 +4,13 @@ import androidx.room.*
 import com.ruviapps.tacklingnephrotic.database.entities.TableName
 import com.ruviapps.tacklingnephrotic.database.entities.UrineResult
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
+import java.util.*
 
 @Dao
 interface ResultDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertResult(urineResult: UrineResult)
 
     @Delete
@@ -20,6 +22,12 @@ interface ResultDao {
     @Query("DELETE FROM ${TableName.UrineResultTable} ")
     suspend fun deleteAllResults()
 
+    @Query("SELECT * FROM ${TableName.UrineResultTable} where ${UrineResult.ColumnRecordedDate} = :id ")
+    suspend fun getReadingById(id : LocalDate) : UrineResult
+
+   @Query("SELECT * FROM ${TableName.UrineResultTable} where ${UrineResult.ColumnPatientId} = :id" +
+            " And ${UrineResult.ColumnRecordedDate} BETWEEN :fromDate And :upToDate ORDER BY ${UrineResult.ColumnRecordedDate} DESC")
+    suspend fun getReadingByDate(id : Long, fromDate : LocalDate,upToDate : LocalDate ) : List<UrineResult>
 
     /**
      * This method may decrease performance

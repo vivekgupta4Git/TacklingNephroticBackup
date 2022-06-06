@@ -15,7 +15,6 @@ import com.ruviapps.tacklingnephrotic.domain.Patient
 import com.ruviapps.tacklingnephrotic.extension.toDatabaseCareTaker
 import com.ruviapps.tacklingnephrotic.extension.toDatabasePatient
 import com.ruviapps.tacklingnephrotic.repository.CareTakerLocalRepository
-import com.ruviapps.tacklingnephrotic.repository.DailyLogLocalRepository
 import com.ruviapps.tacklingnephrotic.repository.PatientLocalRepository
 import com.ruviapps.tacklingnephrotic.repository.ResultLocalRepository
 import org.junit.Assert.*
@@ -26,6 +25,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.time.LocalDate
 import java.util.*
 
 @MediumTest
@@ -36,7 +36,6 @@ class LocalRepositoryTest {
     private lateinit var careTakerRepo: CareTakerLocalRepository
     private lateinit var patientsRepo : PatientLocalRepository
     private lateinit var resultsRepo : ResultLocalRepository
-    private lateinit var dailyLogRepo : DailyLogLocalRepository
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -52,7 +51,6 @@ class LocalRepositoryTest {
         careTakerRepo = CareTakerLocalRepository(database.careTakerDao())
         patientsRepo = PatientLocalRepository(database.patientDao())
         resultsRepo = ResultLocalRepository(database.resultDao())
-        dailyLogRepo = DailyLogLocalRepository(database.dailyLogDao())
 
     }
 
@@ -136,12 +134,12 @@ class LocalRepositoryTest {
         patientsRepo.savePatient(patientTwo.toDatabasePatient())
 
            //given results of patient one
-        val resultOne = UrineResult(1,ResultCode.TWO_PLUS,null,
-        Calendar.getInstance().time,1)
-        val resultTwo = UrineResult(2,ResultCode.THREE_PLUS,null,
-            Calendar.getInstance().time,1)
-        val resultThree = UrineResult(3,ResultCode.FOUR_PLUS,null,
-            Calendar.getInstance().time,1)
+        val resultOne = UrineResult( LocalDate.now(),ResultCode.TWO_PLUS,null,
+       1)
+        val resultTwo = UrineResult( LocalDate.now(),ResultCode.THREE_PLUS,null,
+           1)
+        val resultThree = UrineResult( LocalDate.now(),ResultCode.FOUR_PLUS,null,
+           1)
 
         val list = listOf(resultOne,resultTwo,resultThree)
 
@@ -167,41 +165,5 @@ class LocalRepositoryTest {
     }
 
 
-    @Test
-    fun saveLog_oneCareTakerOnePatientThreeResults_equalsToRepoData()= runBlocking {
 
-        val careTaker = CareTaker(1,"Vivek Gupta","itguru","9891417738",null)
-        careTakerRepo.saveCareTaker(careTaker.toDatabaseCareTaker())
-        val patientOne = Patient(1,"Atharv Gupta",4,19.8f,"",1)
-        patientsRepo.savePatient(patientOne.toDatabasePatient())
-
-        //given results of patient one
-        val resultOne = UrineResult(1,ResultCode.TWO_PLUS,null,
-            Calendar.getInstance().time,1)
-        val resultTwo = UrineResult(2,ResultCode.THREE_PLUS,null,
-            Calendar.getInstance().time,1)
-        val resultThree = UrineResult(3,ResultCode.FOUR_PLUS,null,
-            Calendar.getInstance().time,1)
-
-        val list = listOf(resultOne,resultTwo,resultThree)
-
-        // inserting results of patient one
-        resultsRepo.insertAllResults(list)
-
-        val log1 = DailyLog(1,1,1,
-            null,NephroticState.OBSERVATION,HealthStatus.HEALTHY,Calendar.getInstance().time )
-        val log2 = DailyLog(2,1,2,null,NephroticState.OBSERVATION,HealthStatus.HEALTHY,Calendar.getInstance().time )
-        dailyLogRepo.insertDailyLog(log1)
-
-        dailyLogRepo.insertDailyLog(log2)
-
-        val repoData = dailyLogRepo.getLogsForPatient(patientOne.patientId)
-        assertNotNull(repoData)
-        repoData.onSuccess { data, _ ->
-
-            assertEquals(log1.previousUrineResult,data[0].previousUrineResult)
-            assertEquals(log2.previousUrineResult,data[1].previousUrineResult)
-        }
-
-    }
 }

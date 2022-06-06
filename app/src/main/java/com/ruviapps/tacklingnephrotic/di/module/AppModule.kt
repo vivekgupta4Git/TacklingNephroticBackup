@@ -21,7 +21,7 @@ object AppModule {
         return Room.databaseBuilder(
             appContext,
             NephSyndDatabase::class.java,
-            "nephDatabase"
+            "nephDatabase.db"
         ).build()
     }
 
