@@ -19,6 +19,8 @@ import com.ruviapps.tacklingnephrotic.ui.home.HomeFragmentArgs
 import com.ruviapps.tacklingnephrotic.utility.Event
 import com.ruviapps.tacklingnephrotic.utility.NavigationCommand
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import javax.inject.Inject
@@ -44,18 +46,23 @@ class ResultPickerViewModel
     @Inject
     lateinit var patientUseCaess : PatientUseCases
     init {
-        Log.d(TAG,"ViewModel initiated")
+        Log.d(TAG,"ViewModel initialized")
     }
 
+   /* private val eventChannel = Channel<NavigationCommand>(Channel.BUFFERED)
+    val eventsFlow = eventChannel.receiveAsFlow()
+*/
     fun saveResult(result: TestResult) {
         viewModelScope.launch {
            val query = resultUseCases.insertUrineResultUseCase(result)
             query.onSuccess { _, _ ->
-             val action =   ResultPickerFragmentDirections.actionNavResultToNavHome(result.resultCode)
-                _navigateToDashBoard.value = Event(NavigationCommand.ToDirection(action))
+                val action =   ResultPickerFragmentDirections.actionNavResultToNavHome(result.resultCode)
+        //        eventChannel.send(NavigationCommand.ToDirection(action))
+              _navigateToDashBoard.value = Event(NavigationCommand.ToDirection(action))
             }
-            query.onFailure { message, _ ->
-                _navigateToDashBoard.value = Event(NavigationCommand.ShowError(message))
+            query.onFailure { message, code ->
+                Log.d(TAG,"Insert Error : $message + Code : $code")
+                _navigateToDashBoard.value = Event(NavigationCommand.ShowError("One entry Per Day is allowed"))
             }
         }
     }

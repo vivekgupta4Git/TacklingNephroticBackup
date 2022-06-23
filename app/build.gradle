@@ -8,6 +8,7 @@ plugins {
 }
 
 
+
 android {
     compileSdk 31
 
@@ -54,6 +55,9 @@ android {
 
 
 dependencies {
+
+    //vertical seek bar
+    implementation 'com.github.lukelorusso:VerticalSeekBar:1.2.7'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def roomVersion = "2.4.2"
@@ -109,6 +113,9 @@ dependencies {
     // UI Tests
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
 
+    //theme compatible with compose
+        // When using a AppCompat theme
+        implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
 
     //Dagger hilt
     implementation("com.google.dagger:hilt-android:2.38.1")

@@ -2,9 +2,10 @@
   <library name="Gradle: androidx.lifecycle:lifecycle-service:2.2.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c873fa159d126fb327c9e6fc768afb63/transformed/lifecycle-service-2.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a9d12e92d74371c112f4154a3ba6c20d/transformed/lifecycle-service-2.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0277245401d584b51b377b3c2bdaca63/transformed/lifecycle-service-2.2.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a9d12e92d74371c112f4154a3ba6c20d/transformed/lifecycle-service-2.2.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a9d12e92d74371c112f4154a3ba6c20d/transformed/lifecycle-service-2.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a9d12e92d74371c112f4154a3ba6c20d/transformed/lifecycle-service-2.2.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
