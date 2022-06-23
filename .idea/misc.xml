@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/TacklingNephrotic/app/src/main/res/drawable/card_selector.xml" value="0.1405" />
+        <entry key="..\:/TacklingNephrotic/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
+        <entry key="..\:/TacklingNephrotic/app/src/main/res/drawable/left_pointing_finger_background.xml" value="0.1" />
         <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/app_bar_main.xml" value="0.1875" />
         <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/content_main.xml" value="0.12545289855072464" />
         <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/fragment_gallery.xml" value="0.1875" />
         <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/fragment_home.xml" value="0.1875" />
         <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/fragment_slideshow.xml" value="0.1875" />
         <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/nav_header_main.xml" value="0.1875" />
-        <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/result_picker_fragment.xml" value="0.1" />
+        <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/reading_slider.xml" value="0.22" />
+        <entry key="..\:/TacklingNephrotic/app/src/main/res/layout/result_picker_fragment.xml" value="0.15" />
       </map>
     </option>
   </component>

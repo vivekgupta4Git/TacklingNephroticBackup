@@ -1,0 +1,391 @@
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayoutContainer"
+    android:layout_margin="@dimen/mediumDimen"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sliderContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/largeDimen"
+        android:clipToPadding="false"
+        app:cardCornerRadius="@dimen/largeDimen"
+        app:cardElevation="@dimen/mediumDimen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H,0.5:0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22000003"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.15">
+
+        <ImageView
+            android:id="@+id/sliderImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_baseline_arrow_forward_24"
+            android:contentDescription="slider to select items"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            tools:src="@drawable/ic_baseline_arrow_forward_24" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        app:layout_constraintStart_toEndOf="@+id/sliderContainer"
+        android:id="@+id/readingsContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/material_on_surface_stroke"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.75">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--First Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/firstCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:foreground="@drawable/card_selector"
+                app:cardCornerRadius="@dimen/largeDimen"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/smallDimen">
+
+                    <TextView
+                        android:id="@+id/firstCardReadingName"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:padding="@dimen/xxSmallDimen"
+                        android:text="Protein Reading"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:id="@+id/firsCardReadingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:id="@+id/firsCardUserImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--End of First Card -->
+
+            <!--Second Card -->
+            <androidx.cardview.widget.CardView
+                android:foreground="@drawable/card_selector"
+                app:cardCornerRadius="@dimen/largeDimen"
+                android:id="@+id/secondCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:padding="@dimen/smallDimen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/secondCardReadingName"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:padding="@dimen/xxSmallDimen"
+                        android:text="Protein Reading"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:id="@+id/secondCardReadingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:id="@+id/secondCardUserImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--End of Second Card -->
+
+            <!--third Card -->
+            <androidx.cardview.widget.CardView
+                android:foreground="@drawable/card_selector"
+                app:cardCornerRadius="@dimen/largeDimen"
+                android:id="@+id/thirdCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:padding="@dimen/smallDimen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/thirdCardReadingName"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:padding="@dimen/xxSmallDimen"
+                        android:text="Protein Reading"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:id="@+id/thirdCardReadingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:id="@+id/thirdCardUserImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--End of third Card -->
+
+
+            <!--fourth Card -->
+            <androidx.cardview.widget.CardView
+                android:foreground="@drawable/card_selector"
+                app:cardCornerRadius="@dimen/largeDimen"
+                android:id="@+id/fourthCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:padding="@dimen/smallDimen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/fourthCardReadingName"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:padding="@dimen/xxSmallDimen"
+                        android:text="Protein Reading"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:id="@+id/fourthCardReadingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:id="@+id/fourthCardUserImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--end of fourth Card -->
+
+            <!--fifth Card -->
+            <androidx.cardview.widget.CardView
+                android:foreground="@drawable/card_selector"
+                app:cardCornerRadius="@dimen/largeDimen"
+                android:id="@+id/fifthCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:padding="@dimen/smallDimen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/fifthCardReadingName"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:padding="@dimen/xxSmallDimen"
+                        android:text="Protein Reading"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:id="@+id/fifthCardReadingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:id="@+id/fifthCardUserImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--end of fifth Card -->
+
+            <!--Sixth Card -->
+            <androidx.cardview.widget.CardView
+                android:foreground="@drawable/card_selector"
+                app:cardCornerRadius="@dimen/largeDimen"
+                android:id="@+id/SixthCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:padding="@dimen/smallDimen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/SixthCardReadingName"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:padding="@dimen/xxSmallDimen"
+                        android:text="Protein Reading"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <ImageView
+                        android:id="@+id/SixthCardReadingImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:id="@+id/SixthCardUserImage"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--end of Sixth Card -->
+
+        </LinearLayout>
+        <!-- end of layout inside of reading Container-->
+
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/cameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/largeDimen"
+        android:layout_marginEnd="@dimen/largeDimen"
+        android:layout_marginBottom="@dimen/largeDimen"
+        android:text="Take Picture"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <!--end of readingContainer -->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
