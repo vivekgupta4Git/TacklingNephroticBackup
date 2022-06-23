@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.compose.animation.core.animateIntOffsetAsState
@@ -15,17 +16,26 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.ruviapps.tacklingnephrotic.BuildConfig
+import com.ruviapps.tacklingnephrotic.database.entities.ResultCode
 import com.ruviapps.tacklingnephrotic.databinding.ReadingSliderBinding
+import com.ruviapps.tacklingnephrotic.domain.TestResult
+import com.ruviapps.tacklingnephrotic.utility.NavigationCommand
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
+import java.time.LocalDate
 import java.util.*
+
 
 
 @AndroidEntryPoint
 class ResultPickerFragment : Fragment() {
-
+companion object {
+    const val NO_SELECTION = -100
+}
+    private var selectedReadingValue = NO_SELECTION
     private var latestImageUri : Uri? = null
     private val firstCardPreviewImage by lazy { binding.firsCardUserImage }
     private val secondCardPreviewImage by lazy { binding.secondCardUserImage }
@@ -83,95 +93,215 @@ class ResultPickerFragment : Fragment() {
         return binding.root
     }
 
+    private fun clearSelection() = setCardActive(-1)
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.navigateToDashBoard.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { command ->
+                when(command){
+                    is NavigationCommand.ToDirection ->
+                        findNavController().navigate(command.directions)
+                    is NavigationCommand.ShowError -> {
+                        Toast.makeText(requireContext(),command.errMsg,Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
+            }
+        }
+
         val container = binding.constraintLayoutContainer
         container.setOnTouchListener{ _, event->
-
             when(event.action and event.actionMasked){
                 MotionEvent.ACTION_MOVE ->{
                     move(event)
                 }
-
-
             }
             true
         }
+
+         val yOffset = sliderContainer.height/4
+
+           firstCardView.setOnClickListener {
+            sliderContainer.y = (readingContainer.top + yOffset).toFloat()
+            setCardActive(1)
+        }
+        secondCardView.setOnClickListener {
+            val newYPosition = readingContainer.top + firstCardView.height + yOffset
+            sliderContainer.y = newYPosition.toFloat()
+            setCardActive(2)
+        }
+        thirdCardView.setOnClickListener {
+            val newYPosition = readingContainer.top +
+                    firstCardView.height +
+                    secondCardView.height + yOffset
+            sliderContainer.y = newYPosition.toFloat()
+            setCardActive(3)
+        }
+        forthCardView.setOnClickListener {
+            val newYPosition = readingContainer.top +
+                    firstCardView.height +
+                    secondCardView.height + thirdCardView.height + yOffset
+            sliderContainer.y = newYPosition.toFloat()
+            setCardActive(4)
+        }
+        fifthCardView.setOnClickListener {
+            val newYPosition = readingContainer.top +
+                    firstCardView.height +
+                    secondCardView.height + thirdCardView.height +  forthCardView.height +
+                    yOffset
+            sliderContainer.y = newYPosition.toFloat()
+            setCardActive(5)
+        }
+        sixthCardView.setOnClickListener {
+            val newYPosition = readingContainer.top +
+                    firstCardView.height +
+                    secondCardView.height + thirdCardView.height +  forthCardView.height +
+                    + fifthCardView.height +
+                    yOffset
+            sliderContainer.y = newYPosition.toFloat()
+            setCardActive(6)
+        }
+
+
 
         val cameraButton = binding.cameraButton
         cameraButton.setOnClickListener {
             takePicture()
         }
 
+        val clearSelectionButton = binding.clearSelectionButton
+        clearSelectionButton.setOnClickListener {
+            clearSelection()
+        }
 
+        val confirmSelectionButton = binding.confirmSelectionButton
+        confirmSelectionButton.setOnClickListener {
+          val  saveReading = when(selectedReadingValue){
+                -1 -> ResultCode.NEGATIVE.name
+                0 -> ResultCode.TRACE.name
+                1 -> ResultCode.ONE_PLUS.name
+                2 -> ResultCode.TWO_PLUS.name
+                3 -> ResultCode.THREE_PLUS.name
+                4 -> ResultCode.FOUR_PLUS.name
+                else-> {
+                    Toast.makeText(requireContext(),"No Selection",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
+            }
+
+            viewModel.saveResult(TestResult(LocalDate.now(),
+                saveReading,
+                "",
+                1))
+
+        }
+    }
+
+    private fun setCardActive(cardAtPosition : Int){
+        when(cardAtPosition){
+            1 -> {
+                selectedReadingValue = 4
+                firstCardView.isActivated = true
+                secondCardView.isActivated = false
+                thirdCardView.isActivated = false
+                forthCardView.isActivated = false
+                fifthCardView.isActivated= false
+                sixthCardView.isActivated = false
+            }
+            2 -> {
+                selectedReadingValue = 3
+                firstCardView.isActivated = false
+                secondCardView.isActivated = true
+                thirdCardView.isActivated = false
+                forthCardView.isActivated = false
+                fifthCardView.isActivated= false
+                sixthCardView.isActivated = false
+            }
+            3 ->{
+                selectedReadingValue = 2
+                firstCardView.isActivated = false
+                secondCardView.isActivated = false
+                thirdCardView.isActivated = true
+                forthCardView.isActivated = false
+                fifthCardView.isActivated= false
+                sixthCardView.isActivated = false
+            }
+            4 ->{
+                selectedReadingValue = 1
+                firstCardView.isActivated = false
+                secondCardView.isActivated = false
+                thirdCardView.isActivated = false
+                forthCardView.isActivated = true
+                fifthCardView.isActivated= false
+                sixthCardView.isActivated = false
+            }
+            5 ->{
+                selectedReadingValue = 0
+                firstCardView.isActivated = false
+                secondCardView.isActivated = false
+                thirdCardView.isActivated = false
+                forthCardView.isActivated = false
+                fifthCardView.isActivated= true
+                sixthCardView.isActivated = false
+            }
+            6 ->{
+                selectedReadingValue = -1
+                firstCardView.isActivated = false
+                secondCardView.isActivated = false
+                thirdCardView.isActivated = false
+                forthCardView.isActivated = false
+                fifthCardView.isActivated= false
+                sixthCardView.isActivated = true
+            }
+            else ->{
+                selectedReadingValue = NO_SELECTION
+                firstCardView.isActivated = false
+                secondCardView.isActivated = false
+                thirdCardView.isActivated = false
+                forthCardView.isActivated = false
+                fifthCardView.isActivated= false
+                sixthCardView.isActivated = false
+            }
+        }
     }
 
   private fun move(e : MotionEvent){
-      val maxUpwardMovement = readingContainer.top
-      val minDownwardMovement = readingContainer.top + readingContainer.height
       val offset = sliderContainer.height/2
-      val firstCardYPos = readingContainer.top
-      val secondCardYPos = firstCardYPos + firstCardView.height
-      val thirdCardYPos = secondCardYPos + secondCardView.height
-      val forthCardYPos = thirdCardYPos + thirdCardView.height
-      val fifthCardYPos = forthCardYPos + forthCardView.height
-      val sixthCardYPos = fifthCardYPos + fifthCardView.height
+    val  maxUpwardMovement = readingContainer.top
+     val minDownwardMovement = readingContainer.top + readingContainer.height
+    val  firstCardYPos = readingContainer.top
+    val  secondCardYPos = firstCardYPos + firstCardView.height
+    val  thirdCardYPos = secondCardYPos + secondCardView.height
+     val forthCardYPos = thirdCardYPos + thirdCardView.height
+     val fifthCardYPos = forthCardYPos + forthCardView.height
+     val sixthCardYPos = fifthCardYPos + fifthCardView.height
 
       when(e.y.toInt()){
           in maxUpwardMovement..minDownwardMovement -> {
               sliderContainer.y = e.y - offset
-              Log.d("TAG","${sliderContainer.y}, $firstCardYPos $secondCardYPos")
 
               when(e.y.toInt()){
                   in firstCardYPos..secondCardYPos ->  {
-                      firstCardView.isActivated = true
-                      secondCardView.isActivated = false
-                      thirdCardView.isActivated = false
-                      forthCardView.isActivated = false
-                      fifthCardView.isActivated= false
-                      sixthCardView.isActivated = false
+                     setCardActive(1)
                   }
                   in secondCardYPos..thirdCardYPos ->   {
-                      firstCardView.isActivated = false
-                      secondCardView.isActivated = true
-                      thirdCardView.isActivated = false
-                      forthCardView.isActivated = false
-                      fifthCardView.isActivated= false
-                      sixthCardView.isActivated = false
+                        setCardActive(2)
                   }
                   in thirdCardYPos..forthCardYPos ->    {
-                      firstCardView.isActivated = false
-                      secondCardView.isActivated = false
-                      thirdCardView.isActivated = true
-                      forthCardView.isActivated = false
-                      fifthCardView.isActivated= false
-                      sixthCardView.isActivated = false
+                     setCardActive(3)
                   }
                   in forthCardYPos..fifthCardYPos ->    {
-                      firstCardView.isActivated = false
-                      secondCardView.isActivated = false
-                      thirdCardView.isActivated = false
-                      forthCardView.isActivated = true
-                      fifthCardView.isActivated= false
-                      sixthCardView.isActivated = false
+                      setCardActive(4)
                   }
                   in fifthCardYPos..sixthCardYPos ->    {
-                      firstCardView.isActivated = false
-                      secondCardView.isActivated = false
-                      thirdCardView.isActivated = false
-                      forthCardView.isActivated = false
-                      fifthCardView.isActivated= true
-                      sixthCardView.isActivated = false
+                    setCardActive(5)
                   }
                   in sixthCardYPos..minDownwardMovement -> {
-                      firstCardView.isActivated = false
-                      secondCardView.isActivated = false
-                      thirdCardView.isActivated = false
-                      forthCardView.isActivated = false
-                      fifthCardView.isActivated= false
-                      sixthCardView.isActivated = true
+                    setCardActive(6)
                   }
 
               }
@@ -200,56 +330,7 @@ class ResultPickerFragment : Fragment() {
     }
 
 
-/* binding.arrow.setOnTouchListener(touchListener)
-        viewModel.navigateToDashBoard.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { command ->
-                when(command){
-                    is NavigationCommand.ToDirection ->
-                        findNavController().navigate(command.directions)
-                    is NavigationCommand.ShowError -> {
-                        Toast.makeText(requireContext(),command.errMsg,Toast.LENGTH_SHORT).show()
-                    }
-                    else -> {}
-                }
-            }
-        }
 
-        binding.arrow.y = binding.resultNegativePlusBtn.y
-*/
-        /*binding.result1PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(LocalDate.now(),
-                ResultCode.ONE_PLUS.name,
-                "",
-                1))
-
-
-        }
-        binding.resultTracePlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult(  LocalDate.now(),ResultCode.TRACE.name,"",
-               1))
-
-        }
-        binding.result2PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.TWO_PLUS.name,
-                "",1))
-
-        }
-        binding.result3PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.THREE_PLUS.name,"",
-                1))
-
-        }
-        binding.result4PlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.FOUR_PLUS.name,
-                "",1))
-
-        }
-        binding.resultNegativePlusBtn.setOnClickListener {
-            viewModel.saveResult(TestResult( LocalDate.now(), ResultCode.NEGATIVE.name,
-                "",1))
-
-        }
-*/
     }
 
 

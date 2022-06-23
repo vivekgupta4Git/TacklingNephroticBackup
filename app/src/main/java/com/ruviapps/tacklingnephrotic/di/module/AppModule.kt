@@ -22,7 +22,8 @@ object AppModule {
             appContext,
             NephSyndDatabase::class.java,
             "nephDatabase.db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
 

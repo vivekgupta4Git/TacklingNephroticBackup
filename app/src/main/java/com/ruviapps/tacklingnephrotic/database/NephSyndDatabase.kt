@@ -31,7 +31,7 @@ import com.ruviapps.tacklingnephrotic.database.entities.*
     /*17*/  PrescriptionDetails::class,
     /*18*/  Infections::class
 
-                     ], version = 1, exportSchema = false)
+                     ], version =1, exportSchema = false)
 @TypeConverters(ResultConverter::class,
     DateConverter2::class,
     DateConverter::class,

@@ -78,13 +78,14 @@
                     android:padding="@dimen/smallDimen">
 
                     <TextView
+                        android:fontFamily="sans-serif-black"
                         android:id="@+id/firstCardReadingName"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:padding="@dimen/xxSmallDimen"
-                        android:text="Protein Reading"
+                        android:text="@string/four_plus"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -94,7 +95,7 @@
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/__four_plus" />
 
                     <ImageView
                         android:id="@+id/firsCardUserImage"
@@ -129,13 +130,14 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:fontFamily="sans-serif-black"
                         android:id="@+id/secondCardReadingName"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:padding="@dimen/xxSmallDimen"
-                        android:text="Protein Reading"
+                        android:text="300 to 1000 mg/dL"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -145,7 +147,7 @@
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/__three_plus" />
 
                     <ImageView
                         android:id="@+id/secondCardUserImage"
@@ -180,13 +182,14 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:fontFamily="sans-serif-black"
                         android:id="@+id/thirdCardReadingName"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:padding="@dimen/xxSmallDimen"
-                        android:text="Protein Reading"
+                        android:text="100 to 300 mg/dL ++"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -196,7 +199,7 @@
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/__two_plus" />
 
                     <ImageView
                         android:id="@+id/thirdCardUserImage"
@@ -232,13 +235,14 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:fontFamily="sans-serif-black"
                         android:id="@+id/fourthCardReadingName"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:padding="@dimen/xxSmallDimen"
-                        android:text="Protein Reading"
+                        android:text="30 to 100 mg/dL +"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -248,7 +252,7 @@
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/__one_plus" />
 
                     <ImageView
                         android:id="@+id/fourthCardUserImage"
@@ -283,13 +287,14 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:fontFamily="sans-serif-black"
                         android:id="@+id/fifthCardReadingName"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:padding="@dimen/xxSmallDimen"
-                        android:text="Protein Reading"
+                        android:text="15 to 30 mg/dL"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -299,7 +304,7 @@
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/__trace" />
 
                     <ImageView
                         android:id="@+id/fifthCardUserImage"
@@ -334,13 +339,14 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:fontFamily="sans-serif-black"
                         android:id="@+id/SixthCardReadingName"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:padding="@dimen/xxSmallDimen"
-                        android:text="Protein Reading"
+                        android:text="0mg of proteinuria per decilitre of urine (mg/dL)"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -350,7 +356,7 @@
                         android:layout_height="60dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/__1_negative" />
 
                     <ImageView
                         android:id="@+id/SixthCardUserImage"
@@ -383,6 +389,32 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:layout_margin="@dimen/mediumDimen"
+        android:id="@+id/clearSelectionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cameraButton"
+        app:layout_constraintTop_toBottomOf="@+id/readingsContainer"
+        app:layout_constraintEnd_toStartOf="@+id/confirmSelectionButton"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="677dp" />
+
+    <Button
+        android:layout_margin="@dimen/mediumDimen"
+        app:layout_constraintStart_toEndOf="@+id/clearSelectionButton"
+        android:id="@+id/confirmSelectionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Selection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cameraButton"
+        app:layout_constraintTop_toBottomOf="@+id/readingsContainer"
+        tools:layout_editor_absoluteX="241dp"
+        tools:layout_editor_absoluteY="677dp" />
     <!--end of readingContainer -->
 
 
