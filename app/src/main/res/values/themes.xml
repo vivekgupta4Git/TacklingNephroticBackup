@@ -22,4 +22,11 @@
     <style name="Theme.TacklingNephrotic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TacklingNephrotic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.App.MyTheme" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_appicon</item>
+        <item name="windowSplashScreenIconBackgroundColor">@android:color/holo_green_light</item>
+        <item name="windowSplashScreenBackground">@color/purple_700</item>
+        <item name="postSplashScreenTheme">@style/Theme.TacklingNephrotic.NoActionBar</item>
+
+    </style>
 </resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "813139168902",
+    "project_id": "tacklingnephrotic",
+    "storage_bucket": "tacklingnephrotic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813139168902:android:66bf0bd679159a374b4b07",
+        "android_client_info": {
+          "package_name": "com.ruviApps.tacklingnephrotic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813139168902-qoa5quls6g38r6jd1sv0efag43kl3adb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4N3T_A0LaxEFl4eu1U-VvkCLkbVPpIHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813139168902-qoa5quls6g38r6jd1sv0efag43kl3adb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

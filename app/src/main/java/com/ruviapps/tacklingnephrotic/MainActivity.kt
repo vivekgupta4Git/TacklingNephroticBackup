@@ -12,8 +12,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.ruviapps.tacklingnephrotic.databinding.ActivityMainBinding
-import com.ruviapps.tacklingnephrotic.R
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+
 
 //for dagger hilt , Activity class also need to annotate with entry point with fragment
 @AndroidEntryPoint
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
