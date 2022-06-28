@@ -22,10 +22,10 @@ class CalculateStateFromReadingUseCase @Inject constructor(val  repo : ResultLoc
        var readingList = listOf<UrineResult>()
        val twoDayBack = onDate.minusDays(2)
        val q = repo.getReadingByDate(patientId,twoDayBack,onDate)
-       q.onSuccess { data, message ->
+       q.onSuccess { data, _ ->
             readingList = data
        }
-       q.onFailure { message, statusCode ->
+       q.onFailure { _, _ ->
            return NephroticState.REMISSION
        }
 
