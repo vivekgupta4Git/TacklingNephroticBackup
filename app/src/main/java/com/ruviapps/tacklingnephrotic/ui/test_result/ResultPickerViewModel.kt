@@ -1,28 +1,18 @@
 package com.ruviapps.tacklingnephrotic.ui.test_result
 
 import android.util.Log
-import androidx.compose.ui.text.intl.Locale
-import androidx.core.text.toSpannable
+
 import androidx.lifecycle.*
-import com.ruviapps.tacklingnephrotic.R
-import com.ruviapps.tacklingnephrotic.converters.DateConverter
 import com.ruviapps.tacklingnephrotic.database.dto.onFailure
 import com.ruviapps.tacklingnephrotic.database.dto.onSuccess
-import com.ruviapps.tacklingnephrotic.database.entities.*
-import com.ruviapps.tacklingnephrotic.domain.CareTaker
-import com.ruviapps.tacklingnephrotic.domain.Patient
 import com.ruviapps.tacklingnephrotic.domain.TestResult
 import com.ruviapps.tacklingnephrotic.domain.use_cases.caretaker.CareTakerUseCases
 import com.ruviapps.tacklingnephrotic.domain.use_cases.patient.PatientUseCases
 import com.ruviapps.tacklingnephrotic.domain.use_cases.result.UrineResultUseCases
-import com.ruviapps.tacklingnephrotic.ui.home.HomeFragmentArgs
 import com.ruviapps.tacklingnephrotic.utility.Event
 import com.ruviapps.tacklingnephrotic.utility.NavigationCommand
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import javax.inject.Inject
 
 
