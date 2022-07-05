@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.lukelorusso:VerticalSeekBar:1.2.7@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/15b90080dbd88f7c4fb454b4be508c82/transformed/VerticalSeekBar-1.2.7/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/15b90080dbd88f7c4fb454b4be508c82/transformed/VerticalSeekBar-1.2.7/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/15b90080dbd88f7c4fb454b4be508c82/transformed/VerticalSeekBar-1.2.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a4909250d95607c4b3059447b2ab29f/transformed/VerticalSeekBar-1.2.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a4909250d95607c4b3059447b2ab29f/transformed/VerticalSeekBar-1.2.7/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7a4909250d95607c4b3059447b2ab29f/transformed/VerticalSeekBar-1.2.7/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

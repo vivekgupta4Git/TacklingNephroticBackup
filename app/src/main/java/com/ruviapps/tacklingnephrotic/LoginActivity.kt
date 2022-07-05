@@ -2,41 +2,36 @@ package com.ruviapps.tacklingnephrotic
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.ruviapps.tacklingnephrotic.databinding.ActivityLoginBinding
+import com.ruviapps.tacklingnephrotic.ui.BottomSheet
 
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var  binding : ActivityLoginBinding
-    private val providers = arrayListOf(
-        AuthUI.IdpConfig.EmailBuilder().build(),
-        AuthUI.IdpConfig.PhoneBuilder().build(),
-        AuthUI.IdpConfig.GoogleBuilder().build())
-    private val signInLaunch = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract()
-    ){
-        result ->
 
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        val signIn = binding.signIn
+        setContentView(R.layout.activity_login)
+
+        val signIn = findViewById<TextView>(R.id.signIn)
 
         val wordTwo: Spannable = SpannableString(getString(R.string.sign_in))
 
-        wordTwo.setSpan(ForegroundColorSpan(Color.DKGRAY),
+        wordTwo.setSpan(ForegroundColorSpan(R.color.primaryTextColor),
             0,
             wordTwo.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -46,15 +41,19 @@ class LoginActivity : AppCompatActivity() {
             Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         signIn.append(wordTwo)
         signIn.isClickable = true
-        setContentView(binding.root)
-        binding.getStartedButton.setOnClickListener {
+
+        val getStartedButton = findViewById<Button>(R.id.getStartedButton)
+        getStartedButton.setOnClickListener {
            //let user use our app without login but will create a user
         }
 
-        binding.signIn.setOnClickListener {
-            //show bottom sheet dialog fragment having intent of firebase providers...
-
+        signIn.setOnClickListener {
+            val bottomFragment = BottomSheet()
+            bottomFragment.show(supportFragmentManager,bottomFragment.tag)
         }
 
+
     }
+
+
 }

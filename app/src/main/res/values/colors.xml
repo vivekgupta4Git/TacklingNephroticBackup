@@ -9,4 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#eca20f</color>
 
+    <!--material theme color-->
+    <color name="primaryColor">#ffd54f</color>
+    <color name="primaryLightColor">#ffff81</color>
+    <color name="primaryDarkColor">#c8a415</color>
+    <color name="secondaryColor">#5d4037</color>
+    <color name="secondaryLightColor">#8b6b61</color>
+    <color name="secondaryDarkColor">#321911</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
 </resources>

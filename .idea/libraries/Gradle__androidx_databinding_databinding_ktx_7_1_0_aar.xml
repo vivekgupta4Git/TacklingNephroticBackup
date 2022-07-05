@@ -6,9 +6,10 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d66e09e898066d47138cbc346e43d8b2/transformed/databinding-ktx-7.1.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/269d501f4eee1d8ec74135b0b4d31922/transformed/databinding-ktx-7.1.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/177c8bf6eb5b89cb9ddc8210ca7c760f/transformed/databinding-ktx-7.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d9ed6afa7f49e54bc27e0e65edff1958/transformed/databinding-ktx-7.1.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d9ed6afa7f49e54bc27e0e65edff1958/transformed/databinding-ktx-7.1.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d9ed6afa7f49e54bc27e0e65edff1958/transformed/databinding-ktx-7.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f8b2d4a30461934b35f7652fe35517a5/transformed/databinding-ktx-7.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f8b2d4a30461934b35f7652fe35517a5/transformed/databinding-ktx-7.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f8b2d4a30461934b35f7652fe35517a5/transformed/databinding-ktx-7.1.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
