@@ -10,12 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TacklingNephrotic">
+
         <activity
-            android:theme="@style/Theme.App.MyTheme"
             android:name=".LoginActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/Theme.App.MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,9 +25,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TacklingNephrotic.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.TacklingNephrotic.NoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
