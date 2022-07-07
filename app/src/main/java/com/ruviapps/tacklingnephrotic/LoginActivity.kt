@@ -1,6 +1,6 @@
 package com.ruviapps.tacklingnephrotic
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,23 +9,27 @@ import android.text.style.UnderlineSpan
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.ruviapps.tacklingnephrotic.ui.BottomSheet
+import com.google.firebase.auth.FirebaseAuth
+import com.ruviapps.tacklingnephrotic.ui.login.BottomSheet
 
 
 class LoginActivity : AppCompatActivity() {
 
-
+    private val firebaseUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        setContentView(R.layout.activity_login)
+    //Use Case 1 -> if user have already logged in using email or google sign in method
+       //don't show login activity, just start the app..
+        if(firebaseUser != null){
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
+       //User Case 2 -> showing login activity for first time.
+       setContentView(R.layout.activity_login)
 
         val signIn = findViewById<TextView>(R.id.signIn)
 
@@ -48,12 +52,16 @@ class LoginActivity : AppCompatActivity() {
         }
 
         signIn.setOnClickListener {
+            //use case 3 -> if user has previously installed this app and logged in using provided methods
+            //then show user an option to login
             val bottomFragment = BottomSheet()
             bottomFragment.show(supportFragmentManager,bottomFragment.tag)
         }
 
 
     }
+
+
 
 
 }

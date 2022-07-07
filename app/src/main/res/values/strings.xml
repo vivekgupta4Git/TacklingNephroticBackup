@@ -17,4 +17,5 @@
     <string name="client_id">482693276004-qgsf7ettn3lfv4ds11mo9gp28el07tfv.apps.googleusercontent.com</string>
     <string name="already_have_an_account">Already have an Account?</string>
     <string name="sign_in">Sign In</string>
+    <string name="welcome_back">Welcome back !</string>
 </resources>
