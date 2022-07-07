@@ -1,8 +1,6 @@
 package com.ruviapps.tacklingnephrotic.ui.test_result
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,17 +12,12 @@ import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ruviapps.tacklingnephrotic.BuildConfig
-import com.ruviapps.tacklingnephrotic.MainActivity
-import com.ruviapps.tacklingnephrotic.R
 import com.ruviapps.tacklingnephrotic.database.entities.ResultCode
 import com.ruviapps.tacklingnephrotic.databinding.ReadingSliderBinding
 import com.ruviapps.tacklingnephrotic.domain.TestResult
@@ -34,7 +27,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDate
 import java.util.*
-
 
 
 @AndroidEntryPoint
@@ -115,6 +107,7 @@ class ResultPickerFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = ReadingSliderBinding.inflate(layoutInflater)
+
     //    viewModel.initializeDatabase()
         return binding.root
     }
@@ -164,6 +157,7 @@ class ResultPickerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializedBinding()
+
 
 
         viewModel.navigateToDashBoard.observe(viewLifecycleOwner) { event ->
