@@ -1,18 +1,25 @@
 package com.ruviapps.tacklingnephrotic.ui
 
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.facebook.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.ruviapps.tacklingnephrotic.LoginActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.ruviapps.tacklingnephrotic.MainActivity
 import com.ruviapps.tacklingnephrotic.R
 import com.ruviapps.tacklingnephrotic.databinding.FragmentBottomSheetBinding
@@ -22,9 +29,14 @@ import com.ruviapps.tacklingnephrotic.databinding.FragmentBottomSheetBinding
  * Use the [BottomSheet.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class BottomSheet : BottomSheetDialogFragment() {
 
+    private lateinit var auth: FirebaseAuth
+    private val callbackManager = CallbackManager.Factory.create()
+
     private lateinit var binding : FragmentBottomSheetBinding
+
     private val providers = arrayListOf(
         AuthUI.IdpConfig.EmailBuilder().build(),
         AuthUI.IdpConfig.PhoneBuilder().build(),
@@ -34,8 +46,7 @@ class BottomSheet : BottomSheetDialogFragment() {
         FirebaseAuthUIActivityResultContract()
     ){
             result ->
-        run {
-            if(result!=null) {
+        if(result!=null) {
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
                 dismiss()
                 requireActivity().finish()
@@ -45,13 +56,17 @@ class BottomSheet : BottomSheetDialogFragment() {
                 dismiss()
             }
 
-        }
+
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentBottomSheetBinding.inflate(layoutInflater)
+        auth = Firebase.auth
+        FacebookSdk.sdkInitialize(requireContext())
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -68,7 +83,52 @@ class BottomSheet : BottomSheetDialogFragment() {
 
        }
 
+       val faceBookLoginButton = binding.facebookBtn
+       faceBookLoginButton.setReadPermissions("email", "public_profile")
+
+       faceBookLoginButton.registerCallback(callbackManager,object :
+                FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    Log.d("facebook", "facebook:onSuccess:$loginResult")
+                    handleFacebookAccessToken(loginResult.accessToken)
+                }
+
+                override fun onCancel() {
+                    Log.d("facebook", "facebook:onCancel")
+                }
+
+                override fun onError(error: FacebookException) {
+                    Log.d("facebook", "facebook:onError", error)
+                }
+            })
+
+
        }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // Pass the activity result back to the Facebook SDK
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d("facebook", "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("facebook", "signInWithCredential:success")
+                    val user = auth.currentUser
+                    Log.d("facebook","User = $user")
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("facebook", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(requireContext(), "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    Log.d("facebook","Error login using facebook")
+                }
+            }
+    }
 }

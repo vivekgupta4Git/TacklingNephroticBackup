@@ -19,4 +19,10 @@
     <string name="sign_in">Sign In</string>
     <string name="app_name_supporter">with ease..</string>
     <string name="get_started_button_text">Get Started</string>
+    <string name="no_internet_exclaim">No Internet Connectivity</string>
+    <string name="unknown_error_with_error_code">Unknown Error with Error Code</string>
+
+    <string name="facebook_app_id">5468703409836116</string>
+    <string name="fb_login_protocol_scheme">fb5468703409836116</string>
+    <string name="facebook_client_token">352754f355be418395ffd7e1a6bc631d</string>
 </resources>

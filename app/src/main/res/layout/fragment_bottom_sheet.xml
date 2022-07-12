@@ -10,7 +10,7 @@
         tools:context=".ui.BottomSheet">
 
 
-        <Button
+        <com.google.android.gms.common.SignInButton
             android:id="@+id/googleButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintTop_toBottomOf="@+id/facebookBtn" />
 
         <com.google.android.material.textview.MaterialTextView
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -36,8 +36,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button3"
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebookBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
