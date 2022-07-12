@@ -12,9 +12,11 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="four_plus"> more than 1000 mg/dL ++++</string>
     <string name="about_app">An app to tackle daily tasks of manual logging of urine readings, medication tracking and many more stuffs..</string>
-    <string name="welcome_header">Tackling Nephrotic</string>
+    <string name="app_name_header">Tackling Nephrotic</string>
     <string name="madeInIndia">Made in India</string>
     <string name="client_id">482693276004-qgsf7ettn3lfv4ds11mo9gp28el07tfv.apps.googleusercontent.com</string>
     <string name="already_have_an_account">Already have an Account?</string>
     <string name="sign_in">Sign In</string>
+    <string name="app_name_supporter">with ease..</string>
+    <string name="get_started_button_text">Get Started</string>
 </resources>

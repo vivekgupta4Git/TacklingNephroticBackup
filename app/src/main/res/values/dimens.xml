@@ -9,4 +9,5 @@
     <dimen name="mediumDimen">8dp</dimen>
     <dimen name="smallDimen">4dp</dimen>
     <dimen name="xxSmallDimen">2dp</dimen>
+    <dimen name="extra_large">24dp</dimen>
 </resources>

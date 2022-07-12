@@ -21,20 +21,18 @@ import com.ruviapps.tacklingnephrotic.ui.BottomSheet
 class LoginActivity : AppCompatActivity() {
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_login)
 
         val signIn = findViewById<TextView>(R.id.signIn)
-
         val wordTwo: Spannable = SpannableString(getString(R.string.sign_in))
 
-        wordTwo.setSpan(ForegroundColorSpan(R.color.primaryTextColor),
+     /*   wordTwo.setSpan(ForegroundColorSpan(R.color.md_theme_light_onPrimary),
             0,
             wordTwo.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)*/
         wordTwo.setSpan(
             UnderlineSpan(),
             0,wordTwo.length,
@@ -44,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
 
         val getStartedButton = findViewById<Button>(R.id.getStartedButton)
         getStartedButton.setOnClickListener {
-           //let user use our app without login but will create a user
+
         }
 
         signIn.setOnClickListener {
