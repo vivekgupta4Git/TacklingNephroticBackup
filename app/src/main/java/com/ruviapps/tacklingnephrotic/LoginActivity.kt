@@ -27,7 +27,12 @@ import com.ruviapps.tacklingnephrotic.ui.BottomSheet
 
 
 class LoginActivity : AppCompatActivity() {
-
+companion object{
+    const val INTENT_EXTRA_USERNAME = "userName"
+    const val INTENT_EXTRA_EMAIL = "email"
+    const val INTENT_EXTRA_PHONE="phone"
+    const val INTENT_EXTRA_IS_NEW_USER = "newUser"
+}
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ){
@@ -39,7 +44,13 @@ class LoginActivity : AppCompatActivity() {
     private fun handleResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if(result.resultCode == RESULT_OK){
-            startActivity(Intent(this,MainActivity::class.java))
+            val intent = Intent(this,MainActivity::class.java).apply {
+                putExtra(INTENT_EXTRA_USERNAME,"${response?.user}")
+                putExtra(INTENT_EXTRA_EMAIL,"${response?.email}")
+                putExtra(INTENT_EXTRA_PHONE,"${response?.phoneNumber}")
+                putExtra(INTENT_EXTRA_IS_NEW_USER,"${response?.isNewUser}")
+            }
+            startActivity(intent)
             finish()
         }else{
             if(response===null){
@@ -76,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
         getStartedButton.setOnClickListener {
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
-                .setIsSmartLockEnabled(false)       //for testing purpose
+                .setIsSmartLockEnabled(true)       //for testing purpose
                 .setLogo(R.mipmap.ic_launcher)
                 .setTheme(R.style.Theme_MyLoginTheme)
                 .setAvailableProviders(providers)
