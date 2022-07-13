@@ -63,4 +63,10 @@
         <item name="android:windowBackground">@color/primaryColor</item>
 -->
     </style>
+
+    <!--For shape able Image view-->
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>
