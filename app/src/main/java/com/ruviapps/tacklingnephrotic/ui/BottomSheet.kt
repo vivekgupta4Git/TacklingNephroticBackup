@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
 import com.firebase.ui.auth.AuthUI
@@ -16,10 +17,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.ruviapps.tacklingnephrotic.LoginActivity
 import com.ruviapps.tacklingnephrotic.MainActivity
 import com.ruviapps.tacklingnephrotic.R
 import com.ruviapps.tacklingnephrotic.databinding.FragmentBottomSheetBinding
@@ -32,21 +36,16 @@ import com.ruviapps.tacklingnephrotic.databinding.FragmentBottomSheetBinding
 
 class BottomSheet : BottomSheetDialogFragment() {
 
-    private lateinit var auth: FirebaseAuth
-    private val callbackManager = CallbackManager.Factory.create()
-
+  //  private lateinit var auth: FirebaseAuth
+    /*private val callbackManager = CallbackManager.Factory.create()   */
     private lateinit var binding : FragmentBottomSheetBinding
-
-    private val providers = arrayListOf(
-        AuthUI.IdpConfig.EmailBuilder().build(),
-        AuthUI.IdpConfig.PhoneBuilder().build(),
-        AuthUI.IdpConfig.GoogleBuilder().build())
 
     private val signInLaunch = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ){
             result ->
-        if(result!=null) {
+        handleResult(result)
+      /*  if(result!=null) {
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
                 dismiss()
                 requireActivity().finish()
@@ -55,18 +54,43 @@ class BottomSheet : BottomSheetDialogFragment() {
                 Snackbar.make(binding.root,"Login Failed",Snackbar.LENGTH_LONG).show()
                 dismiss()
             }
-
+*/
 
     }
-
+    private fun handleResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if(result.resultCode == AppCompatActivity.RESULT_OK){
+            val intent = Intent(requireActivity(),MainActivity::class.java).apply {
+                putExtra(LoginActivity.INTENT_EXTRA_USERNAME,"${response?.user}")
+                putExtra(LoginActivity.INTENT_EXTRA_EMAIL,"${response?.email}")
+                putExtra(LoginActivity.INTENT_EXTRA_PHONE,"${response?.phoneNumber}")
+                putExtra(LoginActivity.INTENT_EXTRA_IS_NEW_USER,"${response?.isNewUser}")
+            }
+            startActivity(intent)
+            requireActivity().finish()
+        }else{
+            if(response == null) {
+                Toast.makeText(requireContext(), getString(R.string.login_failed_msg), Toast.LENGTH_SHORT).show()
+            }else{
+                when(response.error?.errorCode){
+                    ErrorCodes.NO_NETWORK -> Toast.makeText(requireContext(),getString(R.string.no_internet_exclaim),Toast.LENGTH_LONG).show()
+                    ErrorCodes.UNKNOWN_ERROR -> Toast.makeText(requireContext(),getString(R.string.unknown_error_with_error_code)
+                            +  "${response.error?.errorCode}",Toast.LENGTH_SHORT).show()
+                    else-> Toast.makeText(requireContext(),getString(R.string.login_failed_msg2),Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentBottomSheetBinding.inflate(layoutInflater)
-        auth = Firebase.auth
+//        auth = Firebase.auth
+/*
         FacebookSdk.sdkInitialize(requireContext())
+*/
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -75,7 +99,8 @@ class BottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
        binding.googleButton.setOnClickListener {
            val sigInIntent = AuthUI.getInstance().createSignInIntentBuilder()
-               .setAvailableProviders(providers)
+               .setIsSmartLockEnabled(false)
+               .setAvailableProviders(arrayListOf( AuthUI.IdpConfig.GoogleBuilder().build()))
                .setLogo(R.mipmap.ic_launcher)
                .setTheme(R.style.Theme_App_MyTheme)
                .build()
@@ -83,6 +108,19 @@ class BottomSheet : BottomSheetDialogFragment() {
 
        }
 
+       val phoneButton = binding.phoneBtn
+       phoneButton.setOnClickListener {
+           val signInIntent = AuthUI.getInstance().createSignInIntentBuilder()
+               .setAvailableProviders(arrayListOf(AuthUI.IdpConfig.PhoneBuilder().build()))
+               .setIsSmartLockEnabled(false)
+               .setLogo(R.mipmap.ic_launcher)
+               .setTheme(R.style.Theme_App_MyTheme)
+               .build()
+           signInLaunch.launch(signInIntent)
+
+       }
+
+/*
        val faceBookLoginButton = binding.facebookBtn
        faceBookLoginButton.setReadPermissions("email", "public_profile")
 
@@ -102,11 +140,12 @@ class BottomSheet : BottomSheetDialogFragment() {
                 }
             })
 
+*/
 
        }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // Pass the activity result back to the Facebook SDK
         callbackManager.onActivityResult(requestCode, resultCode, data)
@@ -130,5 +169,5 @@ class BottomSheet : BottomSheetDialogFragment() {
                     Log.d("facebook","Error login using facebook")
                 }
             }
-    }
+    }*/
 }

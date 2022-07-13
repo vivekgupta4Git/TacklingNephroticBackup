@@ -100,7 +100,7 @@
     </ConstraintSet>
 
     <Transition
-        app:duration="1500"
+        app:duration="2000"
         app:motionInterpolator="anticipate"
         app:autoTransition="animateToEnd"
         app:constraintSetEnd="@id/end"

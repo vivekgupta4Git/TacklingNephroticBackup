@@ -10,4 +10,5 @@
     <dimen name="smallDimen">4dp</dimen>
     <dimen name="xxSmallDimen">2dp</dimen>
     <dimen name="extra_large">24dp</dimen>
+    <dimen name="extra_extra_large_dimen">32dp</dimen>
 </resources>

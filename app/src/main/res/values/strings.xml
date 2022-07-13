@@ -25,4 +25,11 @@
     <string name="facebook_app_id">5468703409836116</string>
     <string name="fb_login_protocol_scheme">fb5468703409836116</string>
     <string name="facebook_client_token">352754f355be418395ffd7e1a6bc631d</string>
+    <string name="welcome_back_header">Welcome back !</string>
+    <string name="login_with_phone_number_btn_text">Login with Phone Number</string>
+    <string name="line_1_privacy_policy">By continuing, you are agreeing to our</string>
+    <string name="line_2_privacy_policy">User Agreement and Privacy Policy</string>
+    <string name="login_with_google_btn_text">Login with Google</string>
+    <string name="login_failed_msg">Login Failed</string>
+    <string name="login_failed_msg2">Login Failed! Something went wrong</string>
 </resources>
