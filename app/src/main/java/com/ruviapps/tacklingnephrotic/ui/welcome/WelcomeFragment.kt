@@ -21,8 +21,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.ruviapps.tacklingnephrotic.R
 import com.ruviapps.tacklingnephrotic.databinding.FragmentWelcomeBinding
+import com.ruviapps.tacklingnephrotic.utility.BaseFragment
 
-class WelcomeFragment : Fragment() {
+class WelcomeFragment : BaseFragment() {
 
     companion object {
         const val TAG = "WelcomeFragment"
