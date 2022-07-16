@@ -2,31 +2,27 @@ package com.ruviapps.tacklingnephrotic.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
-import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.ruviapps.tacklingnephrotic.LoginActivity
 import com.ruviapps.tacklingnephrotic.MainActivity
 import com.ruviapps.tacklingnephrotic.R
 import com.ruviapps.tacklingnephrotic.databinding.FragmentBottomSheetBinding
+import com.ruviapps.tacklingnephrotic.ui.login.LoginViewModel
+import com.ruviapps.tacklingnephrotic.ui.login.LoginViewModel.*
+import com.ruviapps.tacklingnephrotic.utility.NavigationCommand
 
 /**
  * A simple [Fragment] subclass.
@@ -38,25 +34,37 @@ class BottomSheet : BottomSheetDialogFragment() {
 
   //  private lateinit var auth: FirebaseAuth
     /*private val callbackManager = CallbackManager.Factory.create()   */
+
     private lateinit var binding : FragmentBottomSheetBinding
+    private val sharedViewModel : LoginViewModel by activityViewModels()
 
     private val signInLaunch = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ){
             result ->
-        handleResult(result)
-      /*  if(result!=null) {
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
-                dismiss()
-                requireActivity().finish()
-            }else
-            {
-                Snackbar.make(binding.root,"Login Failed",Snackbar.LENGTH_LONG).show()
-                dismiss()
+sharedViewModel.handleResult(result)
+     observeNavigation()
+    }
+
+    private fun observeNavigation(){
+        sharedViewModel.navigation.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { command ->
+                when (command) {
+                    is NavigationCommand.ToDirection ->
+                        findNavController().navigate(command.directions)
+                    is NavigationCommand.ShowError -> {
+                        Toast.makeText(requireContext(), command.errMsg, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+
+                    }
+                }
             }
-*/
+        }
 
     }
+
+
     private fun handleResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if(result.resultCode == AppCompatActivity.RESULT_OK){
@@ -87,8 +95,8 @@ class BottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentBottomSheetBinding.inflate(layoutInflater)
-//        auth = Firebase.auth
 /*
+        auth = Firebase.auth
         FacebookSdk.sdkInitialize(requireContext())
 */
         // Inflate the layout for this fragment
@@ -98,25 +106,12 @@ class BottomSheet : BottomSheetDialogFragment() {
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
        binding.googleButton.setOnClickListener {
-           val sigInIntent = AuthUI.getInstance().createSignInIntentBuilder()
-               .setIsSmartLockEnabled(false)
-               .setAvailableProviders(arrayListOf( AuthUI.IdpConfig.GoogleBuilder().build()))
-               .setLogo(R.mipmap.ic_launcher)
-               .setTheme(R.style.Theme_App_MyTheme)
-               .build()
-           signInLaunch.launch(sigInIntent)
-
+           signInLaunch.launch(sharedViewModel.getSignInIntent(Provider.GOOGLE_PROVIDER))
        }
 
        val phoneButton = binding.phoneBtn
        phoneButton.setOnClickListener {
-           val signInIntent = AuthUI.getInstance().createSignInIntentBuilder()
-               .setAvailableProviders(arrayListOf(AuthUI.IdpConfig.PhoneBuilder().build()))
-               .setIsSmartLockEnabled(false)
-               .setLogo(R.mipmap.ic_launcher)
-               .setTheme(R.style.Theme_App_MyTheme)
-               .build()
-           signInLaunch.launch(signInIntent)
+           signInLaunch.launch(sharedViewModel.getSignInIntent(Provider.PHONE_PROVIDER))
 
        }
 

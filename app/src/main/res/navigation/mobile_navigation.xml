@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_userRole">
+    app:startDestination="@id/nav_loginFragment">
 
     <fragment
         android:id="@+id/nav_home"
@@ -53,5 +53,24 @@
     <fragment
         android:id="@+id/nav_userRole"
         android:name="com.ruviapps.tacklingnephrotic.ui.userrole.UserRoleFragment"
-        android:label="UserRoleFragment" />
+        android:label="UserRoleFragment" >
+        <action
+            android:id="@+id/action_nav_userRole_to_nav_result"
+            app:destination="@id/nav_result" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_loginFragment"
+        android:name="com.ruviapps.tacklingnephrotic.ui.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_nav_loginFragment_to_nav_userRole"
+            app:destination="@id/nav_userRole"
+            app:popUpTo="@id/nav_loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_nav_loginFragment_to_nav_result"
+            app:destination="@id/nav_result"
+            app:popUpTo="@id/nav_loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

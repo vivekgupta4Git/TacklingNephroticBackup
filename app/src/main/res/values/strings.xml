@@ -36,4 +36,5 @@
     <string name="role_selection_usage_msg">To give you best experience of the app, we need a role for you</string>
     <string name="user_role_care_taker_msg">I am Care Taker</string>
     <string name="user_role_patient_msg">I am Patient</string>
+    <string name="fatal_error">Fatal Error !!</string>
 </resources>
